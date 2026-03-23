@@ -1,6 +1,8 @@
 import { NextRequest, NextResponse } from "next/server";
 import { getAsteroidSpiritualMessage } from "../../../lib/cosmic";
 
+export const runtime = "edge";
+
 // キャッシュ用（メモリ内キャッシュ）
 const asteroidsCache = new Map<string, unknown>();
 

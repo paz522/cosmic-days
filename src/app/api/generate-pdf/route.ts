@@ -1,11 +1,11 @@
 import { NextRequest, NextResponse } from "next/server";
 import puppeteer from "@cloudflare/puppeteer";
-import { getCloudflareContext } from "@opennextjs/cloudflare";
+import { getRequestContext } from "@cloudflare/next-on-pages";
 import { generateCosmicLetter, type SpaceWeatherData, type AsteroidData } from "../../../lib/cosmic";
 import { getZodiacSign, getMoonPhase, getLifePathNumber } from "../../../lib/zodiac";
 import Stripe from "stripe";
 
-export const runtime = "nodejs";
+export const runtime = "edge";
 
 interface ApodData {
 	title: string;
@@ -435,8 +435,8 @@ export async function GET(request: NextRequest) {
 	}
 
 	try {
-		// Cloudflare Context を取得
-		const { env } = await getCloudflareContext();
+		// getRequestContext を使用して Cloudflare の Context を取得
+		const { env } = getRequestContext();
 		// @ts-ignore - MYBROWSER might not be in types yet
 		const MYBROWSER = env.MYBROWSER;
 
