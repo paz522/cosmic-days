@@ -1,4 +1,4 @@
-name = "cosmic-day"
+name = "cosmic-days"
 main = ".open-next/worker.js"
 compatibility_date = "2026-03-17"
 compatibility_flags = [ "nodejs_compat", "global_fetch_strictly_public" ]
@@ -12,7 +12,7 @@ binding = "MYBROWSER"
 
 [[services]]
 binding = "WORKER_SELF_REFERENCE"
-service = "cosmic-day"
+service = "cosmic-days"
 
 [observability]
 enabled = true
