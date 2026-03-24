@@ -1,5 +1,5 @@
 name = "cosmic-days"
-main = ".open-next/worker.js"
+pages_build_output_dir = ".open-next/pages-output"
 compatibility_date = "2026-03-17"
 compatibility_flags = [ "nodejs_compat", "global_fetch_strictly_public" ]
 
