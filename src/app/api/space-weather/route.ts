@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { getSolarSpiritualMessage } from "../../../lib/cosmic";
+import { generateAISpiritualMessage } from "../../../lib/ai";
 
 export const runtime = "edge";
 
@@ -28,8 +29,8 @@ export async function GET(request: NextRequest) {
 		// API キーがない場合は空のデータを返す
 		const result = {
 			events: [],
-			summary: "その日の太陽は静かでした。穏やかなエネルギーがあなたを包んでいます。",
-			spiritualMessage: "太陽が静かな日に生まれたあなたは、内なる平和と調和を携えています。",
+			summary: "The sun was quiet that day. A gentle energy surrounds you.",
+			spiritualMessage: "Born on a day of a quiet sun, you carry profound inner peace and harmony.",
 		};
 		spaceWeatherCache.set(date, result);
 		return NextResponse.json(result);
@@ -61,13 +62,13 @@ export async function GET(request: NextRequest) {
 		if (data.length === 0) {
 			result = {
 				events: [],
-				summary: "その日の太陽は静かでした。穏やかなエネルギーがあなたを包んでいます。",
-				spiritualMessage: "太陽が静かな日に生まれたあなたは、内なる平和と調和を携えています。",
+				summary: "The sun was quiet that day. A gentle energy surrounds you.",
+				spiritualMessage: "Born on a day of a quiet sun, you carry profound inner peace and harmony.",
 			};
 		} else {
 			// フレアのクラスを解析
 			const classes = data.map(event => ({
-				class: event.golsp || "不明"
+				class: event.golsp || "Unknown"
 			}));
 
 			const solarLogic = getSolarSpiritualMessage(classes);
@@ -76,11 +77,20 @@ export async function GET(request: NextRequest) {
 				events: data.map(event => ({
 					id: event.flareID,
 					time: event.peakTime,
-					class: event.golsp || "不明",
+					class: event.golsp || "Unknown",
 				})),
 				summary: solarLogic.summary,
 				spiritualMessage: solarLogic.spiritualMessage,
 			};
+
+			// AI によるスピリチュアルメッセージの生成を試みる
+			const aiMessage = await generateAISpiritualMessage({
+				type: "solar",
+				data: result,
+			});
+			if (aiMessage) {
+				result.spiritualMessage = aiMessage;
+			}
 		}
 
 		// キャッシュに保存

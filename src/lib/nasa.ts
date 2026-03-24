@@ -37,7 +37,7 @@ export async function fetchApod(date?: string): Promise<NasaApodResponse> {
 
 	if (!response.ok) {
 		const error: NasaApiError = await response.json();
-		throw new Error(error.error?.message || "NASA API の取得に失敗しました");
+		throw new Error(error.error?.message || "Failed to fetch from NASA API");
 	}
 
 	return response.json() as Promise<NasaApodResponse>;
@@ -63,7 +63,7 @@ export async function fetchApodRange(
 
 	if (!response.ok) {
 		const error: NasaApiError = await response.json();
-		throw new Error(error.error?.message || "NASA API の取得に失敗しました");
+		throw new Error(error.error?.message || "Failed to fetch from NASA API");
 	}
 
 	return response.json() as Promise<NasaApodResponse[]>;

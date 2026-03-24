@@ -110,20 +110,20 @@ function DemoContent() {
 			const earthOrbits = Math.floor(ageInDays / 365.25);
 			const distanceTraveledKm = earthOrbits * 940000000;
 			
-			const colors = ["ディープパープル", "コスミックブルー", "スターダストゴールド", "ネビュラピンク", "ギャラクシーグリーン"];
-			const phases = ["新月 🌑", "上弦の月 🌓", "満月 🌕", "下弦の月 🌗"];
+			const colors = ["Deep Purple", "Cosmic Blue", "Stardust Gold", "Nebula Pink", "Galaxy Green"];
+			const phases = ["New Moon 🌑", "First Quarter 🌓", "Full Moon 🌕", "Last Quarter 🌗"];
 			
 			const fortuneData: FortuneData = {
 				luckyColor: colors[Math.floor(Math.random() * colors.length)],
 				luckyMoon: phases[Math.floor(Math.random() * phases.length)],
-				message: `あなたの誕生日の宇宙は、${zodiac.name}のエネルギーを強く受けています。守護星は${asteroids.length > 0 ? (asteroids as Array<{ name: string }>)[0].name : "遠くを旅する小惑星"}です。`,
+				message: `The universe on your birthday is strongly influenced by the energy of ${zodiac.name}. Your guardian star is ${asteroids.length > 0 ? (asteroids as Array<{ name: string }>)[0].name : "a distant asteroid"}.`,
 				earthOrbits,
 				distanceTraveled: `${distanceTraveledKm.toLocaleString()} km`,
 				zodiac: {
 					name: zodiac.name,
 					englishName: zodiac.name,
 					symbol: zodiac.symbol,
-					description: `${zodiac.element}星座。支配星：${zodiac.planet}`,
+					description: `${zodiac.element} sign. Ruling Planet: ${zodiac.planet}`,
 					element: zodiac.element,
 					rulingPlanet: zodiac.planet,
 				},

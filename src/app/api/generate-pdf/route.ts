@@ -1,11 +1,13 @@
 import { NextRequest, NextResponse } from "next/server";
 import puppeteer from "@cloudflare/puppeteer";
-import { getRequestContext } from "@cloudflare/next-on-pages";
+import { getCloudflareContext } from "@opennextjs/cloudflare";
 import { generateCosmicLetter, type SpaceWeatherData, type AsteroidData } from "../../../lib/cosmic";
 import { getZodiacSign, getMoonPhase, getLifePathNumber } from "../../../lib/zodiac";
 import Stripe from "stripe";
 
-export const runtime = "edge";
+// Note: runtime = "edge" is intentionally omitted here.
+// @opennextjs/cloudflare compiles all routes for Workers automatically.
+// Removing this allows Node.js APIs (node:fs, puppeteer-core) to work in local dev.
 
 interface ApodData {
 	title: string;
@@ -48,7 +50,7 @@ function generateHTML(
 
 	return `
 <!DOCTYPE html>
-<html lang="ja">
+<html lang="en">
 <head>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -148,9 +150,22 @@ function generateHTML(
 		.content {
 			position: relative;
 			z-index: 1;
-			height: 100%;
+			display: block;
+			width: 100%;
+		}
+		.content.cover {
 			display: flex;
 			flex-direction: column;
+			justify-content: center;
+			align-items: center;
+			height: 100%;
+			min-height: 247mm; /* 297mm - 50mm padding */
+		}
+		.apod-wrapper {
+			display: flex;
+			flex-direction: column;
+			align-items: center;
+			width: 100%;
 		}
 		h1 {
 			font-family: 'Noto Serif JP', serif;
@@ -185,8 +200,6 @@ function generateHTML(
 			background: linear-gradient(to right, rgba(252, 211, 77, 0.5), transparent);
 		}
 		.cover {
-			justify-content: center;
-			align-items: center;
 			text-align: center;
 		}
 		.cover-icon {
@@ -203,8 +216,8 @@ function generateHTML(
 		}
 		.apod-container {
 			width: 100%;
-			max-width: 500px;
-			padding: 10px;
+			max-width: 400px;
+			padding: 8px;
 			background: rgba(255, 255, 255, 0.05);
 			border: 1px solid rgba(251, 191, 36, 0.2);
 			border-radius: 12px;
@@ -224,6 +237,14 @@ function generateHTML(
 			box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
 			page-break-inside: avoid;
 			break-inside: avoid;
+			display: inline-block; /* ページまたぎ防止に有効 */
+			width: 100%;
+			font-size: 16px;
+			line-height: 1.8;
+		}
+		.section-content {
+			font-size: 16px;
+			line-height: 1.8;
 		}
 		.section-title {
 			color: #fbbf24;
@@ -232,11 +253,15 @@ function generateHTML(
 			margin-bottom: 12px;
 			display: block;
 			text-transform: uppercase;
-			letter-spacing: 1px;
+			letter-spacing: 1.5px;
 		}
 		p {
 			margin-bottom: 12px;
 			text-align: justify;
+		}
+		.card p {
+			font-size: 16px;
+			line-height: 1.8;
 		}
 		.blessing-box {
 			background: linear-gradient(135deg, rgba(88, 28, 135, 0.3), rgba(131, 24, 67, 0.3));
@@ -244,8 +269,8 @@ function generateHTML(
 			padding: 30px;
 			border-radius: 20px;
 			font-style: italic;
-			font-size: 110%;
-			line-height: 2;
+			font-size: 20px;
+			line-height: 2.2;
 			text-align: center;
 			page-break-inside: avoid;
 			break-inside: avoid;
@@ -276,16 +301,16 @@ function generateHTML(
 		<div class="content cover">
 			<div class="cover-icon">✦</div>
 			<h1>CosmicDays Report</h1>
-			<p class="cover-date">${date.replace(/-/g, '.')} — あなたが降り立った永遠の刻</p>
+			<p class="cover-date">${date.replace(/-/g, '.')} — The eternal moment you descended</p>
 			${apod.hasImage ? `
 			<div class="apod-container">
 				<img src="${apod.url}" alt="${apod.title}" class="apod-image" />
 				<p style="font-size: 11px; margin-top: 10px; color: #a855f7;">${apod.title}</p>
 			</div>
 			` : ''}
-			<p style="max-width: 400px; margin-top: 20px; color: #94a3b8; line-height: 1.6;">
-				このレポートは、あなたが誕生した日の宇宙の配置を読み解き、<br>
-				魂へのメッセージとして纏めたものです。
+			<p style="max-width: 380px; margin-top: 12px; color: #94a3b8; line-height: 1.5; font-size: 13px;">
+				This report deciphers the cosmic alignment on the day you were born,<br>
+				and compiles it as a message to your soul.
 			</p>
 		</div>
 	</div>
@@ -294,7 +319,7 @@ function generateHTML(
 	<div class="page">
 		<div class="border-frame"><div class="border-inner"></div></div>
 		<div class="content">
-			<h2>📖 宇宙の導き</h2>
+			<h2>📖 Cosmic Guidance</h2>
 			<div class="card">
 				<div class="section-content">${nl2br(cosmicLetter.intro)}</div>
 			</div>
@@ -308,7 +333,7 @@ function generateHTML(
 	<div class="page">
 		<div class="border-frame"><div class="border-inner"></div></div>
 		<div class="content">
-			<h2>${zodiacSymbol} ${zodiacSign} - 魂の使命</h2>
+			<h2>${zodiacSymbol} ${zodiacSign} - Soul Mission</h2>
 			<div class="card">
 				<span class="section-title">Zodiac Message</span>
 				<div class="section-content">${nl2br(cosmicLetter.zodiac)}</div>
@@ -320,7 +345,7 @@ function generateHTML(
 	<div class="page">
 		<div class="border-frame"><div class="border-inner"></div></div>
 		<div class="content">
-			<h2>${moonPhase.emoji} ${moonPhase.phase} - エネルギー</h2>
+			<h2>${moonPhase.emoji} ${moonPhase.phase} - Moon Energy</h2>
 			<div class="card">
 				<span class="section-title">Moon Phase Energy</span>
 				<div class="section-content">${nl2br(cosmicLetter.moon)}</div>
@@ -332,7 +357,7 @@ function generateHTML(
 	<div class="page">
 		<div class="border-frame"><div class="border-inner"></div></div>
 		<div class="content">
-			<h2>🔢 ライフパスナンバー ${lifePathNumber}</h2>
+			<h2>🔢 Life Path Number ${lifePathNumber}</h2>
 			<div class="card">
 				<span class="section-title">Numerology Path</span>
 				<div class="section-content">${nl2br(cosmicLetter.lifePath)}</div>
@@ -344,7 +369,7 @@ function generateHTML(
 	<div class="page">
 		<div class="border-frame"><div class="border-inner"></div></div>
 		<div class="content">
-			<h2>☀️ 太陽のエネルギー</h2>
+			<h2>☀️ Solar Energy</h2>
 			<div class="card">
 				<span class="section-title">Solar Activity</span>
 				<div class="section-content">${nl2br(cosmicLetter.spaceWeather)}</div>
@@ -356,7 +381,7 @@ function generateHTML(
 	<div class="page">
 		<div class="border-frame"><div class="border-inner"></div></div>
 		<div class="content">
-			<h2>☄️ あなたの守護天体</h2>
+			<h2>☄️ Your Guardian Star</h2>
 			<div class="card">
 				<span class="section-title">Celestial Guardians</span>
 				<div class="section-content">${nl2br(cosmicLetter.asteroid)}</div>
@@ -372,7 +397,7 @@ function generateHTML(
 				<div class="section-content">${nl2br(cosmicLetter.blessing)}</div>
 			</div>
 			<div class="footer" style="margin-top: auto;">
-				<p>宇宙の愛が常にあなたと共にありますように。</p>
+				<p>May the love of the universe always be with you.</p>
 			</div>
 		</div>
 	</div>
@@ -387,7 +412,7 @@ function generateHTML(
 			</div>
 
 			<div class="footer" style="margin-top: auto;">
-				<p>Generated by CosmicDays on ${new Date().toLocaleDateString('ja-JP')}</p>
+				<p>Generated by CosmicDays on ${new Date().toLocaleDateString('en-US')}</p>
 			</div>
 		</div>
 	</div>
@@ -435,11 +460,6 @@ export async function GET(request: NextRequest) {
 	}
 
 	try {
-		// getRequestContext を使用して Cloudflare の Context を取得
-		const { env } = getRequestContext();
-		// @ts-ignore - MYBROWSER might not be in types yet
-		const MYBROWSER = env.MYBROWSER;
-
 		const isLocalDev = process.env.NODE_ENV === "development";
 
 		// 全データを並列で取得
@@ -539,6 +559,9 @@ export async function GET(request: NextRequest) {
 			});
 		} else {
 			// Cloudflare 環境：@cloudflare/puppeteer を使用
+			const { env } = await getCloudflareContext({ async: true });
+			// @ts-ignore - MYBROWSER might not be in types yet
+			const MYBROWSER = env.MYBROWSER;
 			if (!MYBROWSER) {
 				throw new Error("MYBROWSER binding not found. Please check your Cloudflare configuration.");
 			}

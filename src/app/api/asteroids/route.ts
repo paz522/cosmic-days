@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { getAsteroidSpiritualMessage } from "../../../lib/cosmic";
+import { generateAISpiritualMessage } from "../../../lib/ai";
 
 export const runtime = "edge";
 
@@ -29,8 +30,8 @@ export async function GET(request: NextRequest) {
 		const result = {
 			asteroids: [],
 			count: 0,
-			summary: "その日、地球に接近する小惑星はありませんでした。",
-			spiritualMessage: "小惑星のない静かな日に生まれたあなたは、平和で安定したエネルギーを携えています。",
+			summary: "On that day, no major asteroids passed near Earth.",
+			spiritualMessage: "Born on a day of quiet cosmic voyages, you possess a strong sense of independence and stable spirituality, unwavering against external influences.",
 		};
 		asteroidsCache.set(date, result);
 		return NextResponse.json(result);
@@ -84,8 +85,8 @@ export async function GET(request: NextRequest) {
 			result = {
 				asteroids: [],
 				count: 0,
-				summary: "その日、地球に接近する小惑星はありませんでした。",
-				spiritualMessage: "小惑星のない静かな日に生まれたあなたは、平和で安定したエネルギーを携えています。",
+				summary: "On that day, no major asteroids passed near Earth.",
+				spiritualMessage: "Born on a day of quiet cosmic voyages, you possess a strong sense of independence and stable spirituality, unwavering against external influences.",
 			};
 		} else {
 			const closest = sortedAsteroids[0];
@@ -125,6 +126,15 @@ export async function GET(request: NextRequest) {
 				summary: asteroidLogic.summary,
 				spiritualMessage: asteroidLogic.spiritualMessage,
 			};
+
+			// AI によるスピリチュアルメッセージの生成を試みる
+			const aiMessage = await generateAISpiritualMessage({
+				type: "asteroid",
+				data: result,
+			});
+			if (aiMessage) {
+				result.spiritualMessage = aiMessage;
+			}
 		}
 
 		// キャッシュに保存
@@ -138,8 +148,8 @@ export async function GET(request: NextRequest) {
 		const result = {
 			asteroids: [],
 			count: 0,
-			summary: "小惑星データの取得中にエラーが発生しました。",
-			spiritualMessage: "宇宙は常にあなたと共にあります。",
+			summary: "An error occurred while fetching asteroid data.",
+			spiritualMessage: "The universe is always with you.",
 		};
 		asteroidsCache.set(date, result);
 		return NextResponse.json(result);

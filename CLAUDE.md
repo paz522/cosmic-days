@@ -1,12 +1,12 @@
 # CosmicDays — Project Brief
 
 ## What this app does
-User enters their birthday → sees a free preview → pays $4.99 via Stripe → downloads a personalized PDF report about what happened in space on their birthday.
+User enters their birthday → sees a free preview → pays $1 via Stripe → downloads a personalized PDF report about what happened in space on their birthday.
 
 ## User flow
 1. Enter date of birth on top page
 2. Free preview page shows: APOD photo (blurred) + asteroid count + solar flare class
-3. Click "Get Full Report" → Stripe checkout ($4.99)
+3. Click "Get Full Report" → Stripe checkout ($1)
 4. After payment → PDF generated → download page
 
 ---
@@ -16,7 +16,7 @@ User enters their birthday → sees a free preview → pays $4.99 via Stripe →
 - Deploy: Cloudflare Workers (OpenNext adapter)
 - Payment: Stripe
 - PDF: pdf-lib
-- AI narration: Anthropic Claude API (claude-sonnet-4-20250514)
+- AI narration: OpenRouter API (google/gemini-2.0-flash-lite)
 - Language: TypeScript
 
 ## Environment variables needed
@@ -25,8 +25,8 @@ NASA_API_KEY=
 STRIPE_SECRET_KEY=
 STRIPE_WEBHOOK_SECRET=
 STRIPE_PRICE_ID=
-ANTHROPIC_API_KEY=
-NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY=
+OPENROUTER_API_KEY=
+STRIPE_PUBLISHABLE_KEY=
 ```
 
 ---

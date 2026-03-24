@@ -33,7 +33,7 @@ function SuccessContent() {
 
 	useEffect(() => {
 		if (!sessionId && !date) {
-			setError("セッション ID または日付が指定されていません");
+			setError("Session ID or date missing");
 			setLoading(false);
 			return;
 		}
@@ -46,14 +46,14 @@ function SuccessContent() {
 
 				if (!response.ok) {
 					const errorData = await response.json() as { error?: string };
-					throw new Error(errorData.error || "PDF の生成に失敗しました");
+					throw new Error(errorData.error || "Failed to generate PDF");
 				}
 
 				const blob = await response.blob();
 				const pdfUrl = window.URL.createObjectURL(blob);
 				setPdfUrl(pdfUrl);
 			} catch (err) {
-				setError(err instanceof Error ? err.message : "不明なエラー");
+				setError(err instanceof Error ? err.message : "Unknown error");
 			} finally {
 				setLoading(false);
 			}
@@ -98,8 +98,11 @@ function SuccessContent() {
 					<div className="flex flex-col items-center justify-center w-full relative">
 						{/* Loading Shooting Stars */}
 						<div className="absolute inset-0 overflow-hidden pointer-events-none">
-							<div className="shooting-star" style={{ top: "15%", right: "15%", animationDelay: "0.2s", animationDuration: "2.8s" }}></div>
-							<div className="shooting-star" style={{ top: "45%", right: "10%", animationDelay: "1.5s", animationDuration: "3.2s" }}></div>
+							<div className="shooting-star" style={{ top: "10%", right: "10%", animationDelay: "0s", animationDuration: "2s" }}></div>
+							<div className="shooting-star" style={{ top: "30%", right: "20%", animationDelay: "1.2s", animationDuration: "3s" }}></div>
+							<div className="shooting-star" style={{ top: "50%", right: "5%", animationDelay: "2.5s", animationDuration: "2.5s" }}></div>
+							<div className="shooting-star" style={{ top: "70%", right: "25%", animationDelay: "0.8s", animationDuration: "4s" }}></div>
+							<div className="shooting-star" style={{ top: "20%", right: "40%", animationDelay: "3.5s", animationDuration: "2.2s" }}></div>
 						</div>
 
 						<div className="flex flex-col items-center gap-8 z-10 w-full">
@@ -111,7 +114,7 @@ function SuccessContent() {
 							</div>
 							<div className="text-center w-full space-y-4">
 								<h2 className="text-2xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-blue-400 animate-pulse">
-									宇宙レポートを生成しています
+									Generating Cosmic Report
 								</h2>
 								
 								<div className="w-full bg-purple-900/20 rounded-full h-3 overflow-hidden border border-purple-500/30 backdrop-blur-sm">
@@ -122,7 +125,7 @@ function SuccessContent() {
 								</div>
 								
 								<p className="text-purple-300/80 text-sm tracking-widest animate-cosmic">
-									星々のささやきを読み解いています...
+									Deciphering whispers of the stars...
 								</p>
 							</div>
 						</div>
@@ -136,7 +139,7 @@ function SuccessContent() {
 							onClick={() => window.location.reload()}
 							className="mt-4 text-sm text-purple-400 hover:text-purple-300 underline underline-offset-4"
 						>
-							再試行する
+							Retry
 						</button>
 					</div>
 				)}
@@ -148,10 +151,10 @@ function SuccessContent() {
 							<div className="relative z-10">
 								<div className="text-6xl mb-6 animate-float inline-block">✨</div>
 								<h1 className="text-white font-bold text-3xl leading-tight mb-4">
-									あなたの宇宙レポートが<br/>完成しました
+									Your Cosmic Report<br/>is ready
 								</h1>
 								<p className="text-purple-200/70 text-lg tracking-wide">
-									魂の航海図が今、あなたの元へ
+									The soul navigation chart has arrived
 								</p>
 							</div>
 						</div>
@@ -162,24 +165,24 @@ function SuccessContent() {
 								className="w-full py-6 rounded-2xl bg-gradient-to-r from-purple-600 via-pink-600 to-blue-600 text-white font-bold text-xl hover:from-purple-700 hover:via-pink-700 hover:to-blue-700 transition-all shadow-[0_0_30px_rgba(168,85,247,0.4)] border border-white/20 hover:scale-[1.02] active:scale-95 flex items-center justify-center gap-3 group"
 							>
 								<span className="text-2xl group-hover:animate-bounce">⬇️</span>
-								PDFを受け取る
+								Download PDF
 							</button>
 
 							<a
-								href={`https://x.com/intent/post?text=${encodeURIComponent("宇宙が私の誕生に贈ったメッセージを受け取りました ✨ @CosmicDays 🚀")}`}
+								href={`https://x.com/intent/post?text=${encodeURIComponent("I received a message from the universe given at my birth ✨ @CosmicDays 🚀")}`}
 								target="_blank"
 								rel="noopener noreferrer"
 								className="w-full py-5 rounded-2xl bg-[#0a0a0a] text-white font-bold text-lg hover:bg-neutral-900 transition-all border border-white/10 hover:scale-[1.02] active:scale-95 flex items-center justify-center gap-3"
 							>
 								<svg className="w-5 h-5 fill-current" viewBox="0 0 24 24"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
-								Xで共有する
+								Share on X
 							</a>
 
 							<a
 								href="/"
 								className="w-full py-4 rounded-2xl bg-white/5 text-gray-400 font-bold hover:bg-white/10 transition-all border border-white/5 hover:scale-[1.02] active:scale-95 flex items-center justify-center gap-2 mt-4 text-sm"
 							>
-								<span>←</span> トップページに戻る
+								<span>←</span> Back to top
 							</a>
 						</div>
 					</div>

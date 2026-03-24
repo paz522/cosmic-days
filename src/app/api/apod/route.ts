@@ -5,21 +5,11 @@ export const runtime = "edge";
 // NASA API キーキャッシュ用（メモリ内キャッシュ）
 const apodCache = new Map<string, unknown>();
 
-// フォールバック画像（NASA Image Library のロイヤリティフリー画像 - 複数用意）
-const FALLBACK_IMAGES = [
-	"https://images-assets.nasa.gov/image/1628173487371/1628173487371~orig.jpg",
-	"https://images-assets.nasa.gov/image/GRC-2023-00044-01-Original/GRC-2023-00044-01-Original~orig.jpg",
-	"https://images-assets.nasa.gov/image/iss057e009127/iss057e009127~orig.jpg",
-];
-
 const FALLBACK_TITLE = "Cosmic Nebula";
-const FALLBACK_EXPLANATION = "The universe is vast and beautiful. Just like this cosmic nebula, your life holds infinite possibilities and wonder. This image represents the eternal beauty of the cosmos that witnessed your birth.";
+const FALLBACK_EXPLANATION = "広大な宇宙の美しさと共に、あなたの人生には無限の可能性と驚きが広がっています。この星雲のように、あなたが生まれた瞬間の宇宙は永遠に輝いています。";
 
-// 日付ごとにフォールバック画像を決定（ハッシュ関数）
-function getFallbackImageForDate(date: string): string {
-	const hash = date.split("").reduce((acc, char) => acc + char.charCodeAt(0), 0);
-	return FALLBACK_IMAGES[hash % FALLBACK_IMAGES.length];
-}
+// ローカルのプレミアムフォールバック画像
+const FALLBACK_IMAGE_PATH = "/images/cosmic-fallback.png";
 
 export async function GET(request: NextRequest) {
 	const searchParams = request.nextUrl.searchParams;
@@ -37,13 +27,18 @@ export async function GET(request: NextRequest) {
 		return NextResponse.json(apodCache.get(date));
 	}
 
+	const host = request.headers.get("host") || "localhost:3000";
+	const protocol = request.headers.get("x-forwarded-proto") || "http";
+	const origin = `${protocol}://${host}`;
+	const absoluteFallbackUrl = `${origin}${FALLBACK_IMAGE_PATH}`;
+
 	const NASA_API_KEY = process.env.NASA_API_KEY;
 
 	if (!NASA_API_KEY) {
 		// API キーがない場合はフォールバック画像を返す
 		const result = {
 			title: FALLBACK_TITLE,
-			url: getFallbackImageForDate(date),
+			url: absoluteFallbackUrl,
 			explanation: FALLBACK_EXPLANATION,
 			hasImage: true,
 		};
@@ -59,7 +54,7 @@ export async function GET(request: NextRequest) {
 		if (!response.ok) {
 			const result = {
 				title: FALLBACK_TITLE,
-				url: getFallbackImageForDate(date),
+				url: absoluteFallbackUrl,
 				explanation: FALLBACK_EXPLANATION,
 				hasImage: true,
 			};
@@ -81,7 +76,7 @@ export async function GET(request: NextRequest) {
 
 		const result = {
 			title: data.title || FALLBACK_TITLE,
-			url: hasValidImage ? data.url : getFallbackImageForDate(date),
+			url: hasValidImage ? data.url : absoluteFallbackUrl,
 			explanation: data.explanation || FALLBACK_EXPLANATION,
 			hasImage: true,
 		};
@@ -94,7 +89,7 @@ export async function GET(request: NextRequest) {
 		// エラー時もフォールバック画像を返す
 		const result = {
 			title: FALLBACK_TITLE,
-			url: getFallbackImageForDate(date),
+			url: absoluteFallbackUrl,
 			explanation: FALLBACK_EXPLANATION,
 			hasImage: true,
 		};

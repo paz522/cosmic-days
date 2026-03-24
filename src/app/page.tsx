@@ -2,6 +2,7 @@
 
 import { useRouter } from "next/navigation";
 import { useState } from "react";
+import Link from "next/link";
 import SolarSystemInput from "@/components/SolarSystemInput";
 
 export default function Home() {
@@ -44,10 +45,10 @@ export default function Home() {
 						</h1>
 					</div>
 					<p className="text-xl text-gray-300 leading-relaxed">
-						あなたの魂が星に導かれた日
+						The day your soul was guided by the stars
 					</p>
 					<p className="text-lg text-purple-300 mt-3">
-						〜宇宙からのメッセージを受け取る〜
+						~ Receive a message from the universe ~
 					</p>
 				</div>
 
@@ -57,7 +58,7 @@ export default function Home() {
 							Cosmic Birth Date
 						</label>
 						<p className="text-purple-400/80 text-sm mt-1 px-4">
-							惑星を導き、あなたの魂が地球に降り立った「その時」へ
+							Guide the planets to the moment your soul descended to Earth
 						</p>
 					</div>
 
@@ -68,7 +69,7 @@ export default function Home() {
 							<div className="flex-1 text-center bg-purple-900/20 backdrop-blur-md px-4 py-4 rounded-2xl border border-purple-500/30 shadow-inner flex flex-col justify-center min-h-[80px]">
 								<span className="text-purple-400/60 text-[10px] block mb-1 font-bold tracking-widest">SELECTED COSMIC DATE</span>
 								<span className="text-xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-purple-400 to-blue-400">
-									{year ? `${year}年 ${month}月 ${day}日` : "日付を選択してください"}
+									{year ? `${year}-${month}-${day}` : "Please select a date"}
 								</span>
 							</div>
 							
@@ -77,7 +78,7 @@ export default function Home() {
 								disabled={!date}
 								className="flex-1 px-6 py-4 rounded-2xl bg-gradient-to-r from-purple-600 via-pink-600 to-blue-600 text-white font-bold text-lg hover:from-purple-700 hover:via-pink-700 hover:to-blue-700 disabled:bg-gray-800/50 disabled:text-gray-600 disabled:cursor-not-allowed transition-all shadow-lg shadow-purple-500/20 hover:shadow-purple-500/40 hover:scale-[1.02] active:scale-95 border border-white/10 min-h-[80px] flex items-center justify-center"
 							>
-								✨ 宇宙の扉を開く ✨
+								✨ Open the Cosmic Door ✨
 							</button>
 						</div>
 
@@ -87,17 +88,21 @@ export default function Home() {
 								<span>🕒 TIME TRAVEL</span>
 							</div>
 							<p className="text-gray-500 text-[9px] text-right">
-								※1900年〜現在までの宇宙データ
+								*Cosmic data available from 1900 to present
 							</p>
 						</div>
 					</div>
 				</form>
 
 				<p className="text-gray-500 text-sm text-center max-w-xs">
-					星々の配置があなたの運命を語ります
+					The alignment of the stars speaks of your destiny
 					<br />
 					Let the cosmos reveal your destiny
 				</p>
+
+				<Link href="/tokushoho" className="text-gray-600 hover:text-purple-400 transition-colors text-xs">
+					特定商取引法に基づく表記
+				</Link>
 			</main>
 		</div>
 	);

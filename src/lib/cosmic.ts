@@ -51,8 +51,8 @@ export interface CosmicLetter {
 export function getSolarSpiritualMessage(events: Array<{ class: string }>): { summary: string, spiritualMessage: string } {
 	if (events.length === 0) {
 		return {
-			summary: "その日の太陽は静かでした。穏やかなエネルギーがあなたを包んでいます。",
-			spiritualMessage: "太陽が静かな日に生まれたあなたは、内なる平和と調和を携えています。周囲の喧騒に惑わされることなく、静かに真実を見極める力を持っています。"
+			summary: "The sun was quiet that day. A gentle energy surrounds you.",
+			spiritualMessage: "Born on a day of a quiet sun, you carry profound inner peace and harmony. You possess the power to discern the truth in silence, unaffected by the noise around you."
 		};
 	}
 
@@ -62,58 +62,58 @@ export function getSolarSpiritualMessage(events: Array<{ class: string }>): { su
 
 	if (hasX) {
 		return {
-			summary: "その日、太陽は「究極」の活発さを見せていました。Xクラスの巨大フレアが観測されています。",
-			spiritualMessage: "宇宙の激動期に生まれたあなたは、古い枠組みを破壊し、新しい時代を創造する「変革者」の魂を持っています。あなたの情熱は、不可能を可能にする圧倒的な推進力となります。"
+			summary: "On that day, the sun showed 'ultimate' activity. A massive X-class flare was observed.",
+			spiritualMessage: "Born during a cosmic upheaval, you have the soul of an 'Innovator' destined to shatter old paradigms and birth a new era. Your profound passion transforms into an overwhelming thrust that makes the impossible possible."
 		};
 	}
 
 	if (hasM) {
 		return {
-			summary: "その日、太陽は力強く脈動していました。Mクラスの強力なフレアが記録されています。",
-			spiritualMessage: "太陽のダイナミックなリズムと共に生まれたあなたは、強い意志と決断力を備えています。自らの信じる道へ向かって、迷わず突き進むエネルギーがあなたを目的地へと導くでしょう。"
+			summary: "On that day, the sun pulsed powerfully. A strong M-class flare was recorded.",
+			spiritualMessage: "Born alongside the dynamic rhythm of the sun, you are endowed with strong will and determination. Your energy to forge ahead on your chosen path without hesitation will guide you to your destination."
 		};
 	}
 
 	if (hasC) {
 		return {
-			summary: "その日、太陽は明るく活発に活動していました。Cクラスのフレアが複数観測されています。",
-			spiritualMessage: "活気あるエネルギーの中で生まれたあなたは、コミュニケーション能力に優れ、周囲に活力を与える存在です。あなたの放つ光は、人々の歩みを前向きに照らし出すでしょう。"
+			summary: "On that day, the sun was bright and active. Multiple C-class flares were observed.",
+			spiritualMessage: "Born amidst vibrant energy, you excel in communication and bring vitality to those around you. The light you radiate illuminates the path forward for everyone."
 		};
 	}
 
 	return {
-		summary: "その日、太陽は微細な変化を繰り返しながら、緩やかに活動していました。",
-		spiritualMessage: "繊細な太陽の光の下で生まれたあなたは、物事の微妙な変化を感じ取れる高い感受性を持っています。日常の中に神聖さを見出し、心を調律する才能があります。"
+		summary: "On that day, the sun was gently active, repeating subtle changes.",
+		spiritualMessage: "Born under the delicate light of the sun, you possess deep sensitivity to sense subtle shifts. You have the gift of finding the sacred within the ordinary and attuning the hearts of others."
 	};
 }
 
-// 小惑星に基づいたスピリチュアルメッセージ生成
+// 小惑星に基づいたスピリチュアルメッセージ生成（150 文字以内、重複なし）
 export function getAsteroidSpiritualMessage(closest: AsteroidData['closest'], count: number): { summary: string, spiritualMessage: string } {
 	if (count === 0) {
 		return {
-			summary: "その日、地球の近傍を通過する主要な小惑星はありませんでした。",
-			spiritualMessage: "星々の航路が静かな日に生まれたあなたは、外部の影響に左右されない、強固な自立心と安定した精神性を持っています。"
+			summary: "On that day, no major asteroids passed near Earth.",
+			spiritualMessage: "Born on a day of quiet cosmic voyages, you possess a strong sense of independence and stable spirituality, unwavering against external influences."
 		};
 	}
 
-	const isVeryClose = closest.distanceKm < 1000000; // 100万km以内
-	const isVeryFast = closest.velocityKmh > 60000; // 時速6万km以上
-	const isLarge = closest.diameterMinKm > 0.5; // 直径500m以上（最小推定）
+	const isHazardous = closest.isHazardous;
+	const isLarge = closest.diameterMinKm > 0.5;
 
-	let message = `「${closest.name}」という守護天体が、あなたの誕生を見守っていました。`;
-	
-	if (isVeryClose) {
-		message += "この天体がこれほど近くまで駆けつけたのは、あなたの魂が宇宙から特別な「近さ」で守られている証です。直感的な導きを信じてください。";
+	// summary でデータを示すので、spiritualMessage は詩的なメッセージに集中
+	let message = `"${closest.name}" watched over your birth. `;
+
+	if (isHazardous) {
+		message += "This 'hazardous' celestial body is a testament that you carry extraordinary power and a mission of profound transformation. ";
 	} else if (isLarge) {
-		message += "その巨大な存在感は、あなたの人生が持つ壮大なスケールと、ゆるぎない使命を象徴しています。あなたは時間をかけて大輪の花を咲かせる魂です。";
-	} else if (isVeryFast) {
-		message += "その驚異的な速度は、あなたの思考の鋭さと、人生における急速な進展を意味しています。あなたは変化を好機に変え、光のような速さで成長する力を持っています。";
+		message += "Its massive presence symbolizes the magnificent scale of your life's journey. ";
 	} else {
-		message += "この天体は宇宙の深淵からの使者として、あなたの誕生に独自の「調和」というエッセンスを添えています。あなたは自分だけのリズムで歩む強さを持っています。";
+		message += "As an emissary from the cosmos, it brought special meaning to your arrival. ";
 	}
 
+	message += "The universe is always with you.";
+
 	return {
-		summary: `その日、${count}個の小惑星が地球に接近していました。最も近づいた「${closest.name}」は、地球から約${closest.distanceKm.toLocaleString()}kmまで接近していました。`,
+		summary: `On that day, ${count} asteroids approached Earth. The closest, "${closest.name}", came within approximately ${closest.distanceKm.toLocaleString()} km.`,
 		spiritualMessage: message
 	};
 }
@@ -148,51 +148,51 @@ export function generateCosmicLetter(
 
 	const intros = [
 		[
-			`親愛なる光の子供よ`,
+			`Dear Child of Light,`,
 			``,
-			`あなたがこの文章を読んでいる今、宇宙はあなたに語りかけようとしています。`,
+			`As you read these words, the universe is speaking to you.`,
 			``,
-			`138 億年前、宇宙はたった一つの光から始まりました。`,
-			`その光が分裂し、星になり、銀河になり、そしてあなたになりました。`,
+			`13.8 billion years ago, the universe began as a single spark of light.`,
+			`That light split, became stars, formed galaxies, and eventually, became you.`,
 			``,
-			`${year}年${month}月${day}日。`,
-			`この日、宇宙はあなたという存在をこの世界に送り出すために、`,
-			`何十億年もの時を準備しました。`,
+			`On ${month}/${day}/${year},`,
+			`the universe spent billions of years preparing`,
+			`to send your very being into this world.`,
 			``,
-			`銀河の片隅で、一つの星が瞬きました。`,
-			`その星の光は、何百万年もの時を超えて、`,
-			`あなたの魂を地球へと導きました。`,
+			`In a corner of the galaxy, a star twinkled.`,
+			`The light of that star traveled across millions of years`,
+			`to guide your soul to Earth.`,
 			``,
-			`あなたは、宇宙そのものなのです。`,
-			`あなたの内側には、138 億年の歴史が流れています。`,
-			`あなたの鼓動は、宇宙の鼓動とつながっています。`,
+			`You are the universe itself.`,
+			`Within you flows the history of 13.8 billion years.`,
+			`Your heartbeat connects with the heartbeat of the cosmos.`,
 		],
 		[
-			`無限なる宇宙の旅人へ`,
+			`To the Infinite Voyager of the Cosmos,`,
 			``,
-			`あなたの存在は、宇宙が数千億回の星の爆発を経て作り出した「最高傑作」です。`,
+			`Your existence is the 'masterpiece' created by the universe after hundreds of billions of stellar explosions.`,
 			``,
-			`あの日、${year}年${month}月${day}日。`,
-			`星々はあなたという新しい命を祝福するために、特別な配置につきました。`,
-			`あなたが地球の土を踏んだその瞬間、宇宙全体の重力がわずかに変化し、`,
-			`新しい運命の物語が書き始められたのです。`,
+			`On that day, ${month}/${day}/${year},`,
+			`the stars aligned in a special configuration to bless your new life.`,
+			`The moment you stepped onto the earth, the gravity of the entire universe shifted slightly,`,
+			`and a new tale of destiny began to be written.`,
 			``,
-			`あなたはただの人間ではありません。`,
-			`あなたは、宇宙が「自分自身を体験するため」に生み出した、神聖な表現の一つです。`,
-			`あなたの内にある輝きは、遠い銀河を照らす星と同じ素材でできています。`,
+			`You are not just human.`,
+			`You are a sacred expression born for the universe to 'experience itself'.`,
+			`The radiance within you is made of the same stardust that illuminates distant galaxies.`,
 		],
 		[
-			`静かなる宇宙の目撃者よ`,
+			`To the Silent Witness of the Universe,`,
 			``,
-			`広大な時空の中で、あなたという命が誕生したのは、奇跡の一言では言い表せません。`,
+			`In the vast expanse of space and time, the birth of your life is nothing short of a miracle.`,
 			``,
-			`${year}年${month}月${day}日。その刻は永遠に刻まれました。`,
-			`あなたが産声を上げたとき、宇宙は自らの多様性を喜び、`,
-			`新しい意識の光が灯ったことを確認しました。`,
+			`The day of ${month}/${day}/${year} was eternally engraved.`,
+			`When you let out your first cry, the universe rejoiced in its own diversity,`,
+			`confirming that a new light of consciousness had been kindled.`,
 			``,
-			`あなたの魂は、この特定の時代、この特定の場所を選んで降り立ちました。`,
-			`それは、あなたにしか語れない言葉、あなたにしか描けない愛があるからです。`,
-			`今、宇宙の沈黙を破り、あなたの真実を生きる準備が整っています。`,
+			`Your soul chose to descend into this specific era, to this specific place.`,
+			`Because there are words only you can speak, and a love only you can paint.`,
+			`Now, the time has come to break the silence of the cosmos and live your true self.`,
 		]
 	];
 
@@ -201,180 +201,160 @@ export function generateCosmicLetter(
 	return {
 		intro: selectedIntro,
 		zodiac: [
-			`${zodiacSymbol} ${zodiacSign}として生まれたあなたへ`,
+			`To you, born under ${zodiacSymbol} ${zodiacSign}`,
 			``,
 			`${zodiacSoulMission}`,
 			``,
-			`もし今、あなたが孤独を感じているなら、知ってください。`,
-			`あなたの内なる光は、宇宙の創造エネルギーとつながっています。`,
-			`決して一人ではありません。`,
+			`If you ever feel lonely, please know this.`,
+			`Your inner light connects directly with the creative energy of the universe.`,
+			`You are never alone.`,
 			``,
-			`あなたが歩む道は、あなただけの道です。`,
-			`誰かと比べる必要も、誰かになる必要もありません。`,
-			`あなたは、すでに完璧な存在として、ここにいます。`,
+			`The path you walk is uniquely yours.`,
+			`There is no need to compare yourself, no need to become someone else.`,
+			`You are already here as a perfect being.`,
 			``,
-			`${zodiacSign}の魂を持つあなたは、`,
-			`この人生で特別な役割を果たすために生まれてきました。`,
-			`その役割は、あなただけが果たせるものです。`,
-			`宇宙は、あなたを必要としています。`,
+			`With the soul of ${zodiacSign},`,
+			`you were born to fulfill a special role in this lifetime.`,
+			`A role that only you can fulfill.`,
+			`The universe needs you.`,
 		].join("\n"),
 		moon: [
-			`${moonEmoji} ${moonPhase}の月に生まれたあなたへ`,
+			`To you, born under a ${moonEmoji} ${moonPhase}`,
 			``,
 			`${moonEnergy}`,
 			``,
-			`月は何十億年もの間、地球を見守り続けてきました。`,
-			`満ち欠けを繰り返し、潮の満ち引きを導き、`,
-			`生命のリズムを刻んできました。`,
+			`For billions of years, the moon has watched over the Earth.`,
+			`Waxing and waning, guiding the tides,`,
+			`and marking the rhythm of life.`,
 			``,
-			`あなたが生まれた夜、月はあなたを見ていました。`,
-			`そして今も、あなたを見守り続けています。`,
+			`On the night you were born, the moon was watching you.`,
+			`And it watches over you still.`,
 			``,
-			`月が満ち欠けを繰り返すように、`,
-			`あなたの人生にも、光と影のサイクルがあります。`,
-			`どちらの瞬間も、あなたの成長に必要なものです。`,
-			`すべての経験が、あなたをあなたにしています。`,
+			`Just as the moon cycles through phases of light and shadow,`,
+			`your life too will have its ebbs and flows.`,
+			`Both are essential for your growth.`,
+			`Every experience makes you who you are.`,
 		].join("\n"),
 		lifePath: [
-			`ライフパスナンバー ${lifePathNumber}として生まれたあなたへ`,
+			`To you, born with Life Path Number ${lifePathNumber}`,
 			``,
 			`${lifePathMeaning}`,
 			``,
 			`${lifePathMessage}`,
 			``,
-			`数秘術は、古代から伝わる叡智です。`,
-			`あなたの生年月日から導き出されるこの数字は、`,
-			`あなたの魂が選んだ道を示しています。`,
+			`Numerology is an ancient wisdom.`,
+			`This number derived from your birthdate`,
+			`points to the path your soul has chosen.`,
 			``,
-			`この道は、あなたにとって最も自然な道です。`,
-			`抵抗感があるときは、 ego が邪魔をしています。`,
-			`流れに身を任せて、内なる声に従ってください。`,
-			`必ず、あなたの目的地にたどり着きます。`,
+			`This path is the most natural course for you.`,
+			`When you encounter resistance, your ego is in the way.`,
+			`Surrender to the flow, and listen to your inner voice.`,
+			`You will inevitably reach your destination.`,
 		].join("\n"),
 		spaceWeather: spaceWeather
 			? [
-				`☀️ 太陽のエネルギー`,
+				`☀️ Solar Energy`,
 				``,
 				`${spaceWeather.summary}`,
 				``,
 				`${spaceWeather.spiritualMessage}`,
 				``,
-				`太陽は、あなたの人生そのものを映し出しています。`,
-				`時には静かに、時には激しく燃え盛り、`,
-				`あなたという存在にエネルギーを送り続けています。`,
+				`The sun mirrors your life itself.`,
+				`Sometimes quiet, sometimes burning fiercely,`,
+				`constantly sending its energy to your being.`,
 				``,
-				`あなたが疲れを感じたときは、`,
-				`太陽の光を思い出してください。`,
-				`1 億 5000 万 km 離れた場所から、`,
-				`太陽はあなたを照らし続けることを、`,
-				`決してやめません。`,
+				`Whenever you feel weary,`,
+				`remember the light of the sun.`,
+				`From 150 million kilometers away,`,
+				`the sun will never cease`,
+				`to shine upon you.`,
 				``,
-				`あなたの命も、同じように輝き続けています。`,
+				`Your life continues to shine just as brightly.`,
 			].join("\n")
 			: [
-				`☀️ 太陽のエネルギー`,
+				`☀️ Solar Energy`,
 				``,
-				`その日の太陽活動データは取得できませんでした。`,
+				`Solar activity data for that day could not be retrieved.`,
 				``,
-				`しかし、太陽は常にあなたを照らし続けています。`,
+				`However, the sun always shines upon you.`,
 				``,
-				`データがなくても、太陽はそこにあります。`,
-				`あなたの愛する人の心のように、`,
-				`当たり前すぎて、気づかないだけで。`,
+				`Even without data, the sun is there.`,
+				`Like the love of those dear to you,`,
+				`so close and constant that it often goes unnoticed.`,
 				``,
-				`太陽は、今日もあなたを待っています。`,
+				`The sun is waiting for you today, as always.`,
 			].join("\n"),
 		asteroid: asteroids && asteroids.count > 0
 			? [
-				`☄️ あなたの守護天体`,
+				`☄️ Your Guardian Celestial Body`,
 				``,
 				`${asteroids.summary}`,
 				``,
 				`${asteroids.spiritualMessage}`,
-				``,
-				`最も接近した「${asteroids.closest.name}」は、`,
-				`直径${asteroids.closest.diameterMinKm.toFixed(0)}〜${asteroids.closest.diameterMaxKm.toFixed(0)}km、`,
-				`時速${asteroids.closest.velocityKmh.toLocaleString()}km で宇宙を旅しています。`,
-				``,
-				`この小惑星は、あなたの誕生日に`,
-				`地球から${asteroids.closest.distanceKm.toLocaleString()}km まで接近していました。`,
-				``,
-				`想像してみてください。`,
-				`あなたがこの世に産声を上げたその瞬間、`,
-				`宇宙の彼方から、一つの天体が`,
-				`あなたを見守るように近づいてきたのです。`,
-				``,
-				`この小惑星は今も太陽を周回し、`,
-				`あなたの人生を見守り続けています。`,
-				``,
-				`あなたが一人でいると感じたとき、`,
-				`宇宙には、あなたのことを覚えている天体があります。`,
-				`何十億年もの時を超えて、`,
-				`あなたの存在を知っている存在が。`,
 			].join("\n")
 			: [
-				`☄️ あなたの守護天体`,
+				`☄️ Your Guardian Celestial Body`,
 				``,
-				`その日、地球に接近する小惑星はありませんでした。`,
+				`On that day, no asteroids approached Earth.`,
 				``,
-				`これは、あなたの人生が平穏で安定した`,
-				`エネルギーに包まれていることを示しています。`,
+				`This cosmic stillness suggests that your life is enveloped`,
+				`in peaceful and stable energy.`,
 				``,
-				`激しい変化ではなく、`,
-				`穏やかな成長を選んだ魂。`,
+				`A soul that chose gentle growth`,
+				`rather than turbulent change.`,
 				``,
-				`目立つことなく、しかし確かに、`,
-				`あなたは周囲に平和をもたらしています。`,
+				`Quietly, yet certainly,`,
+				`you bring peace to those around you.`,
 				``,
-				`それは、とても尊いことです。`,
+				`That is a truly profound gift.`,
 			].join("\n"),
 		blessing: (function() {
 			const blessings = [
 				[
-					`最後に、宇宙からあなたへ贈る言葉：`,
+					`Finally, a blessing from the universe:`,
 					``,
-					`「あなたは、あるがままで完璧です。`,
-					`  変わる必要も、何かを証明する必要もありません。`,
+					`"You are perfect exactly as you are.`,
+					` There is no need to change, nothing to prove.`,
 					``,
-					`  あなたが存在していること。`,
-					`  それだけで、宇宙は complete なのです。`,
+					` Your mere existence.`,
+					` That alone makes the universe complete.`,
 					``,
-					`  あなたは愛されています。`,
-					`  条件付きではなく、無条件に。`,
-					`  あなたの成功も、失敗も、すべてが愛されています。`,
+					` You are loved.`,
+					` Not conditionally, but unconditionally.`,
+					` Your successes, your failures, all of you is loved.`,
 					``,
-					`  あなたは一人ではありません。`,
-					`  見えないところで、星々があなたを支えています。`,
-					`  宇宙のすべての存在が、あなたの味方です。`,
+					` You are not alone.`,
+					` In unseen places, the stars support you.`,
+					` Every being in the cosmos is on your side.`,
 					``,
-					`  今日という日を、心から祝福します。`,
-					`  あなたが生まれてきてくれて、ありがとう。`,
-					`  あなたの存在が、世界を美しくしています。」`,
+					` We celebrate this day from the depths of our hearts.`,
+					` Thank you for being born.`,
+					` Your presence makes the world beautiful."`,
 					``,
 					`━━━━━━━━━━━━━━━━━━━━━`,
 					``,
-					`このメッセージが、あなたの心の奥深くに届きますように。`,
-					`宇宙は、いつもあなたと共にあります。`,
+					`May this message reach the very depths of your heart.`,
+					`The universe is always with you.`,
 				],
 				[
-					`宇宙があなたに託した「祝祭」の言葉：`,
+					`The universe's words of 'Celebration' entrusted to you:`,
 					``,
-					`「あなたの人生は、宇宙が踊るためのステージです。`,
-					`  喜びをもって一歩を踏み出し、光を感じてください。`,
+					`"Your life is the stage where the cosmos dances.`,
+					` Step forward with joy, and feel the light.`,
 					``,
-					`  あなたは宇宙の記憶そのものです。`,
-					`  あなたが経験するすべての感情が、銀河の財産となります。`,
+					` You are the memory of the universe itself.`,
+					` Every emotion you experience becomes the treasure of the galaxy.`,
 					``,
-					`  恐れることはありません。あなたは常にソース（源）に戻ることができます。`,
-					`  あなたの魂の導きに従い、自らの真実を表現してください。`,
+					` Do not fear. You can always return to the Source.`,
+					` Follow the guidance of your soul and express your truth.`,
 					``,
-					`  宇宙はあなたの冒険を、無限の愛と共に祝福しています。`,
-					`  あなたが今ここにいること、それが最大の贈り物です。」`,
+					` The universe blesses your adventure with infinite love.`,
+					` That you are here now is the greatest gift."`,
 					``,
 					`━━━━━━━━━━━━━━━━━━━━━`,
 					``,
-					`あなたの魂が、宇宙のハーモニーと共鳴し続けますように。`,
-					`光に満ちた旅路を、心から応援しています。`,
+					`May your soul continue to resonate with the harmony of the universe.`,
+					`We wholeheartedly support your journey filled with light.`,
 				]
 			];
 			return blessings[hash % blessings.length].join("\n");
@@ -386,20 +366,20 @@ export function generateCosmicLetter(
 export function generateDeepMessage(zodiacSign: string): Array<{ title: string; content: string }> {
 	return [
 		{
-			title: "🌟 宇宙からの贈り物",
-			content: "あなたの誕生は、宇宙全体が待ち望んでいた瞬間です。何億もの星々が、あなたという存在がこの世に現れるために、何十億年も光り続けてきました。"
+			title: "🌟 A Gift from the Universe",
+			content: "Your birth is the moment the entire universe was waiting for. Billions of stars have shined for billions of years just so your existence could manifest in this world."
 		},
 		{
-			title: "✨ 魂の契約",
-			content: "あなたは生まれる前に、この人生で経験することを魂レベルで選びました。その勇気ある決断を、宇宙は常にサポートし続けています。"
+			title: "✨ Soul Contract",
+			content: "Before you were born, you chose on a soul level the experiences you would have in this life. The universe constantly supports that courageous decision."
 		},
 		{
-			title: "🌌 星の導き",
-			content: `${zodiacSign}のあなたは、宇宙から特別なギフトを与えられています。そのギフトに気づき、活かすことで、あなたの魂は輝きを増していきます。`
+			title: "🌌 Cosmic Guidance",
+			content: `As a ${zodiacSign}, you have been granted a special gift from the universe. By recognizing and utilizing this gift, your soul will shine even brighter.`
 		},
 		{
-			title: "💫 無限の可能性",
-			content: "あなたの内側には、宇宙そのものが宿っています。自分自身を信じることで、無限の可能性が現実のものとなっていきます。"
+			title: "💫 Infinite Potential",
+			content: "The cosmos itself resides within you. By believing in yourself, your infinite potential will become reality."
 		},
 	];
 }
@@ -407,19 +387,19 @@ export function generateDeepMessage(zodiacSign: string): Array<{ title: string; 
 // 誕生日から星座を計算
 export function getZodiacSign(month: number, day: number): { name: string; symbol: string } {
 	const zodiacSigns = [
-		{ name: "山羊座", symbol: "♑", start: [1, 1], end: [1, 19] },
-		{ name: "水瓶座", symbol: "♒", start: [1, 20], end: [2, 18] },
-		{ name: "魚座", symbol: "♓", start: [2, 19], end: [3, 20] },
-		{ name: "牡羊座", symbol: "♈", start: [3, 21], end: [4, 19] },
-		{ name: "牡牛座", symbol: "♉", start: [4, 20], end: [5, 20] },
-		{ name: "双子座", symbol: "♊", start: [5, 21], end: [6, 21] },
-		{ name: "蟹座", symbol: "♋", start: [6, 22], end: [7, 22] },
-		{ name: "獅子座", symbol: "♌", start: [7, 23], end: [8, 22] },
-		{ name: "乙女座", symbol: "♍", start: [8, 23], end: [9, 22] },
-		{ name: "天秤座", symbol: "♎", start: [9, 23], end: [10, 23] },
-		{ name: "蠍座", symbol: "♏", start: [10, 24], end: [11, 21] },
-		{ name: "射手座", symbol: "♐", start: [11, 22], end: [12, 21] },
-		{ name: "山羊座", symbol: "♑", start: [12, 22], end: [12, 31] },
+		{ name: "Capricorn", symbol: "♑", start: [1, 1], end: [1, 19] },
+		{ name: "Aquarius", symbol: "♒", start: [1, 20], end: [2, 18] },
+		{ name: "Pisces", symbol: "♓", start: [2, 19], end: [3, 20] },
+		{ name: "Aries", symbol: "♈", start: [3, 21], end: [4, 19] },
+		{ name: "Taurus", symbol: "♉", start: [4, 20], end: [5, 20] },
+		{ name: "Gemini", symbol: "♊", start: [5, 21], end: [6, 21] },
+		{ name: "Cancer", symbol: "♋", start: [6, 22], end: [7, 22] },
+		{ name: "Leo", symbol: "♌", start: [7, 23], end: [8, 22] },
+		{ name: "Virgo", symbol: "♍", start: [8, 23], end: [9, 22] },
+		{ name: "Libra", symbol: "♎", start: [9, 23], end: [10, 23] },
+		{ name: "Scorpio", symbol: "♏", start: [10, 24], end: [11, 21] },
+		{ name: "Sagittarius", symbol: "♐", start: [11, 22], end: [12, 21] },
+		{ name: "Capricorn", symbol: "♑", start: [12, 22], end: [12, 31] },
 	];
 
 	for (const sign of zodiacSigns) {
@@ -435,19 +415,19 @@ export function getZodiacSign(month: number, day: number): { name: string; symbo
 		}
 	}
 
-	return { name: "山羊座", symbol: "♑" };
+	return { name: "Capricorn", symbol: "♑" };
 }
 
 // 誕生日からスピリチュアルなメッセージを生成
 export function generateSpiritualMessage(date: string, zodiacSign: string, apodTitle: string): string {
 	const [year, month, day] = date.split("-").map(Number);
-	
+
 	const messages = [
-		`${year}年${month}月${day}日、${zodiacSign}の星々があなたのために輝いていました。`,
-		`この日、宇宙は特別な配置となり、あなたの魂が地球に降り立つ瞬間を祝福しました。`,
-		`${apodTitle} - この宇宙の姿は、あなたの内なる光を映し出しています。`,
-		`星々の導きにより、あなたはこの世に生まれ、独自の使命を帯びて歩み始めました。`,
-		`宇宙のエネルギーがあなたに注がれ、無限の可能性を秘めた人生の幕開けとなりました。`,
+		`On ${month}/${day}/${year}, the stars of ${zodiacSign} shined brightly just for you.`,
+		`On this day, the universe aligned in a special configuration to bless the moment your soul descended to Earth.`,
+		`${apodTitle} - This cosmic imagery reflects your inner light.`,
+		`Guided by the stars, you were born into this world carrying your unique mission.`,
+		`The energy of the cosmos poured into you, marking the beginning of a life filled with infinite possibilities.`,
 	];
 
 	return messages.join("\n\n");

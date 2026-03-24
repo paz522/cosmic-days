@@ -24,7 +24,7 @@ function PreviewContent() {
 
 	useEffect(() => {
 		if (!date) {
-			setError("日付が指定されていません");
+			setError("No date specified");
 			setLoading(false);
 			return;
 		}
@@ -50,7 +50,7 @@ function PreviewContent() {
 				const spaceWeatherRes = await fetch(`/api/space-weather?date=${date}`);
 				const asteroidsRes = await fetch(`/api/asteroids?date=${date}`);
 
-				if (!apodRes.ok) throw new Error("宇宙データの取得に失敗しました");
+				if (!apodRes.ok) throw new Error("Failed to fetch cosmic data");
 
 				const apodData = await apodRes.json() as ApodData;
 				setApod(apodData);
@@ -86,7 +86,7 @@ function PreviewContent() {
 				);
 				setCosmicLetter(letter);
 			} catch (err) {
-				setError(err instanceof Error ? err.message : "不明なエラー");
+				setError(err instanceof Error ? err.message : "Unknown error");
 			} finally {
 				setLoading(false);
 			}
@@ -147,13 +147,13 @@ function PreviewContent() {
 
 			if (!response.ok) {
 				const errorData = await response.json() as { error?: string };
-				throw new Error(errorData.error || "チェックアウトセッションの作成に失敗しました");
+				throw new Error(errorData.error || "Failed to create checkout session");
 			}
 
 			const { url } = await response.json() as { url: string };
 			window.location.href = url;
 		} catch (err) {
-			setError(err instanceof Error ? err.message : "チェックアウトの準備に失敗しました");
+			setError(err instanceof Error ? err.message : "Failed to prepare checkout");
 			setLoading(false);
 		}
 	};
@@ -180,7 +180,7 @@ function PreviewContent() {
 						CosmicDays
 					</h1>
 					<p className="text-purple-400 text-xs">
-						{date && `${date} — あなたの魂が降り立った日`}
+						{date && `${date} — The day your soul descended`}
 					</p>
 				</div>
 
@@ -208,7 +208,7 @@ function PreviewContent() {
 							</div>
 							<div className="text-center w-full">
 								<p className="text-xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-blue-400 animate-pulse mb-3">
-									{isGeneratingPdf ? "レポートを生成しています..." : "星々のデータを読み込んでいます..."}
+									{isGeneratingPdf ? "Generating Report..." : "Reading Star Data..."}
 								</p>
 								
 								<div className="w-full bg-purple-900/20 rounded-full h-2 mb-4 overflow-hidden border border-purple-500/30">
@@ -220,8 +220,8 @@ function PreviewContent() {
 								
 								<p className="text-gray-400 text-sm">
 									{isGeneratingPdf 
-										? "あなたのための神聖なるドキュメントを作成中です" 
-										: "宇宙の記憶を辿り、あなたの運命を紐解いています"}
+										? "Creating your sacred document" 
+										: "Tracing cosmic memories to unravel your destiny"}
 								</p>
 							</div>
 						</div>
@@ -248,7 +248,7 @@ function PreviewContent() {
 							<div className="flex items-center gap-2 mb-3">
 								<span className="text-2xl">{zodiacSymbol}</span>
 								<h2 className="text-lg font-bold text-transparent bg-clip-text bg-gradient-to-r from-purple-400 via-pink-400 to-blue-400">
-									{zodiacSign} - 魂の使命
+									{zodiacSign} - Soul Mission
 								</h2>
 							</div>
 							<div className="text-gray-200 leading-loose whitespace-pre-line text-sm md:text-base">
@@ -262,7 +262,7 @@ function PreviewContent() {
 								<div className="flex items-center gap-2 mb-3">
 									<span className="text-2xl">{moonPhase.emoji}</span>
 									<h2 className="text-lg font-bold text-transparent bg-clip-text bg-gradient-to-r from-purple-400 via-pink-400 to-blue-400">
-										{moonPhase.phase} - エネルギー
+										{moonPhase.phase} - Energy
 									</h2>
 								</div>
 								<div className="text-gray-200 leading-loose whitespace-pre-line text-sm md:text-base">
@@ -279,7 +279,7 @@ function PreviewContent() {
 										{lifePathNumber.number}
 									</span>
 									<h2 className="text-lg font-bold text-white">
-										ライフパスナンバー
+										Life Path Number
 									</h2>
 								</div>
 								<div className="text-gray-200 leading-loose whitespace-pre-line text-sm md:text-base">
@@ -294,7 +294,7 @@ function PreviewContent() {
 								<div className="flex items-center gap-2 mb-3">
 									<span className="text-2xl">☀️</span>
 									<h2 className="text-lg font-bold text-transparent bg-clip-text bg-gradient-to-r from-purple-400 via-pink-400 to-blue-400">
-										太陽のエネルギー
+										Solar Energy
 									</h2>
 								</div>
 								<div className="text-gray-200 leading-loose whitespace-pre-line text-sm md:text-base">
@@ -309,7 +309,7 @@ function PreviewContent() {
 								<div className="flex items-center gap-2 mb-3">
 									<span className="text-2xl">☄️</span>
 									<h2 className="text-lg font-bold text-transparent bg-clip-text bg-gradient-to-r from-purple-400 via-pink-400 to-blue-400">
-										あなたの守護天体
+										Your Guardian Star
 									</h2>
 								</div>
 								<div className="text-gray-200 leading-loose whitespace-pre-line text-sm md:text-base">
@@ -356,7 +356,7 @@ function PreviewContent() {
 						<div className="grid grid-cols-3 gap-3 w-full">
 							{/* 星座 */}
 							<div className="bg-[#1a1a2e]/60 backdrop-blur-sm rounded-xl p-4 border border-purple-500/20 text-center">
-								<p className="text-purple-400 text-xs mb-1">星座</p>
+								<p className="text-purple-400 text-xs mb-1">Zodiac</p>
 								<p className="text-3xl mb-1">{zodiacSymbol}</p>
 								<p className="text-white text-sm font-medium">{zodiacSign}</p>
 							</div>
@@ -364,7 +364,7 @@ function PreviewContent() {
 							{/* 月齢 */}
 							{moonPhase && (
 								<div className="bg-[#1a1a2e]/60 backdrop-blur-sm rounded-xl p-4 border border-purple-500/20 text-center">
-									<p className="text-purple-400 text-xs mb-1">月齢</p>
+									<p className="text-purple-400 text-xs mb-1">Moon Phase</p>
 									<p className="text-3xl mb-1">{moonPhase.emoji}</p>
 									<p className="text-white text-sm font-medium">{moonPhase.phase}</p>
 								</div>
@@ -373,11 +373,11 @@ function PreviewContent() {
 							{/* 数秘術 */}
 							{lifePathNumber && (
 								<div className="bg-[#1a1a2e]/60 backdrop-blur-sm rounded-xl p-4 border border-purple-500/20 text-center">
-									<p className="text-purple-400 text-xs mb-1">数秘術</p>
+									<p className="text-purple-400 text-xs mb-1">Numerology</p>
 									<p className="text-3xl mb-1 font-bold text-transparent bg-clip-text bg-gradient-to-r from-purple-400 via-pink-400 to-blue-400">
 										{lifePathNumber.number}
 									</p>
-									<p className="text-white text-xs">ライフパス</p>
+									<p className="text-white text-xs">Life Path</p>
 								</div>
 							)}
 						</div>
@@ -386,7 +386,7 @@ function PreviewContent() {
 						<div className="w-full flex flex-col gap-4 mt-4">
 							<div className="text-center">
 								<p className="text-purple-200 text-sm font-medium animate-pulse">
-									ページを閉じると消えてしまうこの感動を、手元に残しませんか？
+									Would you like to keep this inspiration before it disappears?
 								</p>
 							</div>
 
@@ -397,16 +397,16 @@ function PreviewContent() {
 								className="w-full py-5 rounded-xl bg-gradient-to-r from-purple-600 via-pink-600 to-blue-600 text-white font-bold text-lg hover:from-purple-700 hover:via-pink-700 hover:to-blue-700 disabled:bg-gray-700 disabled:text-gray-500 disabled:cursor-not-allowed transition-all shadow-lg shadow-purple-500/50 border border-purple-400/30 hover:scale-[1.02] active:scale-95 group"
 							>
 								<span className="flex items-center justify-center gap-2">
-									{loading ? "🌟 宇宙の扉を準備中..." : (
+									{loading ? "🌟 Preparing Cosmic Door..." : (
 										<>
-											📥 PDFレポートを $1 でダウンロード
+											📥 Download PDF Report for $1
 											<span className="text-xs font-normal bg-white/20 px-2 py-0.5 rounded-full group-hover:bg-white/30 transition-colors">Premium</span>
 										</>
 									)}
 								</span>
 							</button>
 							<p className="text-gray-500 text-[10px] text-center">
-								AI ナレーション付き宇宙レポート • $1 決済 (Stripe)
+								Cosmic report with AI narration • $1 (Stripe)
 							</p>
 						</div>
 					</>
@@ -414,7 +414,7 @@ function PreviewContent() {
 
 				{/* Back link */}
 				<a href="/" className="text-gray-500 hover:text-purple-400 transition-colors text-sm">
-					← 他の日付を選ぶ
+					← Choose another date
 				</a>
 			</main>
 		</div>
