@@ -3,16 +3,8 @@ pages_build_output_dir = ".open-next/pages-output"
 compatibility_date = "2026-03-17"
 compatibility_flags = [ "nodejs_compat", "global_fetch_strictly_public" ]
 
-[assets]
-binding = "ASSETS"
-directory = ".open-next/assets"
-
 [browser]
 binding = "MYBROWSER"
-
-[[services]]
-binding = "WORKER_SELF_REFERENCE"
-service = "cosmic-days"
 
 [observability]
 enabled = true
