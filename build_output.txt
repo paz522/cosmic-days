@@ -1,0 +1,41 @@
+
+> cosmic-days@0.1.0 build
+> next build
+
+笆ｲ Next.js 16.1.5 (Turbopack)
+- Environments: .env.local
+
+Using secrets defined in .dev.vars
+  Creating an optimized production build ...
+Using secrets defined in .dev.vars
+笨・Compiled successfully in 2.7s
+  Running TypeScript ...
+  Collecting page data using 15 workers ...
+笞 Using edge runtime on a page currently disables static generation for that page
+  Generating static pages using 15 workers (0/9) ...
+  Generating static pages using 15 workers (2/9) 
+  Generating static pages using 15 workers (4/9) 
+  Generating static pages using 15 workers (6/9) 
+笨・Generating static pages using 15 workers (9/9) in 254.1ms
+  Finalizing page optimization ...
+
+Route (app)
+笏・笳・/
+笏・笳・/_not-found
+笏・ﾆ・/api/apod
+笏・ﾆ・/api/asteroids
+笏・ﾆ・/api/create-checkout
+笏・ﾆ・/api/generate-narration
+笏・ﾆ・/api/generate-pdf
+笏・ﾆ・/api/space-weather
+笏・ﾆ・/api/webhook
+笏・笳・/demo
+笏・笳・/nasa
+笏・笳・/preview
+笏・笳・/success
+笏・笳・/tokushoho
+
+
+笳・ (Static)   prerendered as static content
+ﾆ・ (Dynamic)  server-rendered on demand
+

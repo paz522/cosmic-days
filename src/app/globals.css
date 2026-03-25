@@ -1,4 +1,6 @@
-@import "tailwindcss";
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
 @layer base {
   body {
@@ -96,8 +98,8 @@
 
 /* Pulse Soul */
 @keyframes pulse-soul {
-  0%, 100% { transform: scale(1); opacity: 0.8; filter: drop-shadow(0 0 5px rgba(255, 255, 255, 0.5)); }
-  50% { transform: scale(1.1); opacity: 1; filter: drop-shadow(0 0 15px rgba(255, 255, 255, 0.8)); }
+  0%, 100% { transform: scale(1); opacity: 0.8; filter: drop-shadow(0 0 5px rgba(255, 255, 255, 0.5)); }  
+  50% { transform: scale(1.1); opacity: 1; filter: drop-shadow(0 0 15px rgba(255, 255, 255, 0.8)); }      
 }
 
 .animate-pulse-soul {
@@ -114,55 +116,55 @@
   animation: progress-fill 2s ease-out forwards;
 }
 
-/* 星のまたたき（背景用） */
+/* 星の瞬き */
 @keyframes star-flicker {
-	0%, 100% { opacity: 0.2; }
-	25% { opacity: 0.8; }
-	50% { opacity: 0.4; }
-	75% { opacity: 1; }
+  0%, 100% { opacity: 0.2; }
+  25% { opacity: 0.8; }
+  50% { opacity: 0.4; }
+  75% { opacity: 1; }
 }
 
 .animate-star {
-	animation: star-flicker 5s ease-in-out infinite;
+  animation: star-flicker 5s ease-in-out infinite;
 }
 
-/* 神秘的な浮遊 */
+/* 宇宙の浮遊感 */
 @keyframes mystical-float {
-	0%, 100% { transform: translateY(0px); }
-	50% { transform: translateY(-10px); }
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-10px); }
 }
 
 .animate-float {
-	animation: mystical-float 6s ease-in-out infinite;
+  animation: mystical-float 6s ease-in-out infinite;
 }
 
 /* 魂の鼓動 */
 @keyframes soul-pulse {
-	0%, 100% { 
-		transform: scale(1);
-		opacity: 0.8;
-	}
-	50% { 
-		transform: scale(1.05);
-		opacity: 1;
-	}
+  0%, 100% {
+    transform: scale(1);
+    opacity: 0.8;
+  }
+  50% {
+    transform: scale(1.05);
+    opacity: 1;
+  }
 }
 
 .animate-pulse-soul {
-	animation: soul-pulse 3s ease-in-out infinite;
+  animation: soul-pulse 3s ease-in-out infinite;
 }
 
-/* 背景の星空 */
+/* 星空背景 */
 .starry-background {
-	background-image: 
-		radial-gradient(2px 2px at 20px 30px, rgba(255,255,255,0.8), transparent),
-		radial-gradient(2px 2px at 40px 70px, rgba(255,255,255,0.6), transparent),
-		radial-gradient(1px 1px at 90px 40px, rgba(255,255,255,0.7), transparent),
-		radial-gradient(2px 2px at 160px 120px, rgba(255,255,255,0.5), transparent),
-		radial-gradient(1px 1px at 230px 80px, rgba(255,255,255,0.8), transparent),
-		radial-gradient(2px 2px at 300px 150px, rgba(255,255,255,0.6), transparent),
-		radial-gradient(1px 1px at 370px 50px, rgba(255,255,255,0.7), transparent),
-		radial-gradient(2px 2px at 450px 180px, rgba(255,255,255,0.5), transparent);
-	background-size: 500px 200px;
-	background-repeat: repeat;
+  background-image:
+    radial-gradient(2px 2px at 20px 30px, rgba(255,255,255,0.8), transparent),
+    radial-gradient(2px 2px at 40px 70px, rgba(255,255,255,0.6), transparent),
+    radial-gradient(1px 1px at 90px 40px, rgba(255,255,255,0.7), transparent),
+    radial-gradient(2px 2px at 160px 120px, rgba(255,255,255,0.5), transparent),
+    radial-gradient(1px 1px at 230px 80px, rgba(255,255,255,0.8), transparent),
+    radial-gradient(2px 2px at 300px 150px, rgba(255,255,255,0.6), transparent),
+    radial-gradient(1px 1px at 370px 50px, rgba(255,255,255,0.7), transparent),
+    radial-gradient(2px 2px at 450px 180px, rgba(255,255,255,0.5), transparent);
+  background-size: 500px 200px;
+  background-repeat: repeat;
 }
