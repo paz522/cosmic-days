@@ -28,7 +28,7 @@ jobs:
         run: npx opennextjs-cloudflare build
 
       - name: Copy worker files
-        run: cp .open-next/pages-output/_worker.js .open-next/assets/ && cp .open-next/pages-output/_routes.json .open-next/assets/
+        run: cp .open-next/worker.js .open-next/assets/_worker.js && cp .open-next/pages-output/_routes.json .open-next/assets/_routes.json
 
       - name: Deploy to Cloudflare Pages
         uses: cloudflare/wrangler-action@v3
