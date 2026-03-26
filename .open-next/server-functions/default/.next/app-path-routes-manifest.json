@@ -1,0 +1,17 @@
+{
+  "/_global-error/page": "/_global-error",
+  "/_not-found/page": "/_not-found",
+  "/api/apod/route": "/api/apod",
+  "/api/asteroids/route": "/api/asteroids",
+  "/api/create-checkout/route": "/api/create-checkout",
+  "/api/generate-narration/route": "/api/generate-narration",
+  "/api/generate-pdf/route": "/api/generate-pdf",
+  "/api/space-weather/route": "/api/space-weather",
+  "/api/webhook/route": "/api/webhook",
+  "/demo/page": "/demo",
+  "/nasa/page": "/nasa",
+  "/page": "/",
+  "/preview/page": "/preview",
+  "/success/page": "/success",
+  "/tokushoho/page": "/tokushoho"
+}

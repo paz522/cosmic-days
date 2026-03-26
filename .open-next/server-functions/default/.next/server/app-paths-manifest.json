@@ -1,0 +1,17 @@
+{
+  "/_global-error/page": "app/_global-error/page.js",
+  "/_not-found/page": "app/_not-found/page.js",
+  "/api/apod/route": "app-edge-has-no-entrypoint",
+  "/api/asteroids/route": "app-edge-has-no-entrypoint",
+  "/api/create-checkout/route": "app-edge-has-no-entrypoint",
+  "/api/generate-narration/route": "app-edge-has-no-entrypoint",
+  "/api/generate-pdf/route": "app/api/generate-pdf/route.js",
+  "/api/space-weather/route": "app-edge-has-no-entrypoint",
+  "/api/webhook/route": "app-edge-has-no-entrypoint",
+  "/demo/page": "app/demo/page.js",
+  "/nasa/page": "app/nasa/page.js",
+  "/page": "app/page.js",
+  "/preview/page": "app/preview/page.js",
+  "/success/page": "app/success/page.js",
+  "/tokushoho/page": "app/tokushoho/page.js"
+}

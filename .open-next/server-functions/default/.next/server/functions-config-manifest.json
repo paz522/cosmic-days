@@ -1,0 +1,11 @@
+{
+  "version": 1,
+  "functions": {
+    "/api/apod": {},
+    "/api/asteroids": {},
+    "/api/create-checkout": {},
+    "/api/generate-narration": {},
+    "/api/space-weather": {},
+    "/api/webhook": {}
+  }
+}

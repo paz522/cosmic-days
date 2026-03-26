@@ -1,0 +1,134 @@
+{
+  "version": 3,
+  "pages404": true,
+  "appType": "app",
+  "caseSensitive": false,
+  "basePath": "",
+  "redirects": [
+    {
+      "source": "/:path+/",
+      "destination": "/:path+",
+      "internal": true,
+      "priority": true,
+      "statusCode": 308,
+      "regex": "^(?:/((?:[^/]+?)(?:/(?:[^/]+?))*))/$"
+    }
+  ],
+  "headers": [],
+  "rewrites": {
+    "beforeFiles": [],
+    "afterFiles": [],
+    "fallback": []
+  },
+  "dynamicRoutes": [],
+  "staticRoutes": [
+    {
+      "page": "/",
+      "regex": "^/(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/(?:/)?$"
+    },
+    {
+      "page": "/_global-error",
+      "regex": "^/_global\\-error(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/_global\\-error(?:/)?$"
+    },
+    {
+      "page": "/_not-found",
+      "regex": "^/_not\\-found(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/_not\\-found(?:/)?$"
+    },
+    {
+      "page": "/api/apod",
+      "regex": "^/api/apod(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/api/apod(?:/)?$"
+    },
+    {
+      "page": "/api/asteroids",
+      "regex": "^/api/asteroids(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/api/asteroids(?:/)?$"
+    },
+    {
+      "page": "/api/create-checkout",
+      "regex": "^/api/create\\-checkout(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/api/create\\-checkout(?:/)?$"
+    },
+    {
+      "page": "/api/generate-narration",
+      "regex": "^/api/generate\\-narration(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/api/generate\\-narration(?:/)?$"
+    },
+    {
+      "page": "/api/generate-pdf",
+      "regex": "^/api/generate\\-pdf(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/api/generate\\-pdf(?:/)?$"
+    },
+    {
+      "page": "/api/space-weather",
+      "regex": "^/api/space\\-weather(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/api/space\\-weather(?:/)?$"
+    },
+    {
+      "page": "/api/webhook",
+      "regex": "^/api/webhook(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/api/webhook(?:/)?$"
+    },
+    {
+      "page": "/demo",
+      "regex": "^/demo(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/demo(?:/)?$"
+    },
+    {
+      "page": "/nasa",
+      "regex": "^/nasa(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/nasa(?:/)?$"
+    },
+    {
+      "page": "/preview",
+      "regex": "^/preview(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/preview(?:/)?$"
+    },
+    {
+      "page": "/success",
+      "regex": "^/success(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/success(?:/)?$"
+    },
+    {
+      "page": "/tokushoho",
+      "regex": "^/tokushoho(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/tokushoho(?:/)?$"
+    }
+  ],
+  "dataRoutes": [],
+  "rsc": {
+    "header": "rsc",
+    "varyHeader": "rsc, next-router-state-tree, next-router-prefetch, next-router-segment-prefetch",
+    "prefetchHeader": "next-router-prefetch",
+    "didPostponeHeader": "x-nextjs-postponed",
+    "contentTypeHeader": "text/x-component",
+    "suffix": ".rsc",
+    "prefetchSegmentHeader": "next-router-segment-prefetch",
+    "prefetchSegmentSuffix": ".segment.rsc",
+    "prefetchSegmentDirSuffix": ".segments",
+    "clientParamParsing": false,
+    "dynamicRSCPrerender": false
+  },
+  "rewriteHeaders": {
+    "pathHeader": "x-nextjs-rewritten-path",
+    "queryHeader": "x-nextjs-rewritten-query"
+  }
+}
