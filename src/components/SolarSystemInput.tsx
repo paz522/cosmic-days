@@ -98,8 +98,8 @@ const SolarSystemInput: React.FC<SolarSystemInputProps> = ({ value, onChange }) 
 		};
 	}, [isDragging, year, month, day]);
 
-	// イベント処理のデバッグ用
-	const handleMouseDown = (e: React.MouseEvent | React.TouchEvent, type: string) => {
+// イベント処理のデバッグ用
+const handleMouseDown = (e: React.MouseEvent | React.TouchEvent, type: string) => {
 		e.preventDefault();
 		setIsDragging(type);
 	};
