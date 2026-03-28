@@ -98,6 +98,12 @@ const SolarSystemInput: React.FC<SolarSystemInputProps> = ({ value, onChange }) 
 		};
 	}, [isDragging, year, month, day]);
 
+	// イベント処理のデバッグ用
+	const handleMouseDown = (e: React.MouseEvent | React.TouchEvent, type: string) => {
+		e.preventDefault();
+		setIsDragging(type);
+	};
+
 	// 各リングの半径
 	const YEAR_RADIUS = 75;
 	const MONTH_RADIUS = 125;
@@ -167,8 +173,8 @@ const SolarSystemInput: React.FC<SolarSystemInputProps> = ({ value, onChange }) 
 					{/* 年 (Purple Planet) */}
 					<g 
 						className="cursor-grab active:cursor-grabbing" 
-						onMouseDown={(e) => { e.preventDefault(); setIsDragging("year"); }}
-						onTouchStart={(e) => { setIsDragging("year"); }}
+						onMouseDown={(e) => handleMouseDown(e, "year")}
+						onTouchStart={(e) => handleMouseDown(e, "year")}
 					>
 						{/* 透明なヒットエリア */}
 						<circle cx={yearPos.x} cy={yearPos.y} r="25" fill="transparent" />
@@ -181,8 +187,8 @@ const SolarSystemInput: React.FC<SolarSystemInputProps> = ({ value, onChange }) 
 					{/* 月 (Pink Planet) */}
 					<g 
 						className="cursor-grab active:cursor-grabbing" 
-						onMouseDown={(e) => { e.preventDefault(); setIsDragging("month"); }}
-						onTouchStart={(e) => { setIsDragging("month"); }}
+						onMouseDown={(e) => handleMouseDown(e, "month")}
+						onTouchStart={(e) => handleMouseDown(e, "month")}
 					>
 						<circle cx={monthPos.x} cy={monthPos.y} r="25" fill="transparent" />
 						<circle cx={monthPos.x} cy={monthPos.y} r="14" fill="#ec4899" filter="url(#glow)" />
@@ -194,8 +200,8 @@ const SolarSystemInput: React.FC<SolarSystemInputProps> = ({ value, onChange }) 
 					{/* 日 (Blue Planet) */}
 					<g 
 						className="cursor-grab active:cursor-grabbing" 
-						onMouseDown={(e) => { e.preventDefault(); setIsDragging("day"); }}
-						onTouchStart={(e) => { setIsDragging("day"); }}
+						onMouseDown={(e) => handleMouseDown(e, "day")}
+						onTouchStart={(e) => handleMouseDown(e, "day")}
 					>
 						<circle cx={dayPos.x} cy={dayPos.y} r="25" fill="transparent" />
 						<circle cx={dayPos.x} cy={dayPos.y} r="10" fill="#3b82f6" filter="url(#glow)" />
