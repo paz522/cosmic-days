@@ -14,7 +14,17 @@ function getStripeClient(): Stripe {
 }
 
 export async function POST(request: NextRequest) {
-	const stripe = getStripeClient();
+	let stripe: Stripe;
+	try {
+		stripe = getStripeClient();
+	} catch (error) {
+		const errorMessage = error instanceof Error ? error.message : "Unknown error";
+		return NextResponse.json(
+			{ error: `Webhook configuration error: ${errorMessage}` },
+			{ status: 500 }
+		);
+	}
+
 	const body = await request.text();
 	const signature = request.headers.get("stripe-signature");
 

@@ -13,8 +13,8 @@ function getStripeClient(): Stripe {
 }
 
 export async function POST(request: NextRequest) {
-	const stripe = getStripeClient();
 	try {
+		const stripe = getStripeClient();
 		const body = (await request.json()) as { date?: string };
 		const { date } = body;
 
