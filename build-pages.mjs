@@ -1,31 +1,41 @@
 import fs from 'fs';
 import path from 'path';
 
-console.log('Packaging OpenNext output for Cloudflare Pages...');
+console.log('Organizing OpenNext output for Cloudflare Pages deployment...');
 
-const outputDir = path.join('.open-next', 'pages-output');
+const baseDir = '.open-next';
+const assetsDir = path.join(baseDir, 'assets');
 
-// Create output directory
-fs.mkdirSync(outputDir, { recursive: true });
-
-// Copy static assets
-if (fs.existsSync(path.join('.open-next', 'assets'))) {
-    fs.cpSync(path.join('.open-next', 'assets'), outputDir, { recursive: true });
-}
-
-// Copy necessary dependencies for _worker.js
-const deps = ['cloudflare', 'server-functions', 'middleware', '.build'];
-for (const dep of deps) {
-    if (fs.existsSync(path.join('.open-next', dep))) {
-        fs.cpSync(path.join('.open-next', dep), path.join(outputDir, dep), { recursive: true });
+// 1. Move everything from assets/ up to baseDir/
+if (fs.existsSync(assetsDir)) {
+    const items = fs.readdirSync(assetsDir);
+    for (const item of items) {
+        fs.cpSync(path.join(assetsDir, item), path.join(baseDir, item), { recursive: true });
     }
+    // Remove the original assets directory
+    fs.rmSync(assetsDir, { recursive: true, force: true });
+    console.log('Moved static assets to root of .open-next/');
 }
 
-// Copy the worker file as _worker.js
-if (fs.existsSync(path.join('.open-next', 'worker.js'))) {
-    fs.copyFileSync(path.join('.open-next', 'worker.js'), path.join(outputDir, '_worker.js'));
-    console.log('Successfully packaged _worker.js and dependencies for Pages deployment.');
-} else {
-    console.error('worker.js not found in .open-next/');
-    process.exit(1);
+// 2. Rename worker.js to _worker.js
+if (fs.existsSync(path.join(baseDir, 'worker.js'))) {
+    fs.renameSync(path.join(baseDir, 'worker.js'), path.join(baseDir, '_worker.js'));
+    console.log('Renamed worker.js to _worker.js');
 }
+
+// 3. Generate _routes.json to exclude static assets from worker
+const routes = {
+    version: 1,
+    include: ["/*"],
+    exclude: [
+        "/_next/static/**",
+        "/*.svg",
+        "/*.png",
+        "/*.jpg",
+        "/*.gif",
+        "/*.ico",
+        "/*.css"
+    ]
+};
+fs.writeFileSync(path.join(baseDir, '_routes.json'), JSON.stringify(routes, null, 2));
+console.log('Successfully generated _routes.json.');

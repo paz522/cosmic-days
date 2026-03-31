@@ -11,7 +11,7 @@
 		"upload": "opennextjs-cloudflare build && opennextjs-cloudflare upload",
 		"preview": "opennextjs-cloudflare build && opennextjs-cloudflare preview",
 		"cf-typegen": "wrangler types --env-interface CloudflareEnv ./cloudflare-env.d.ts",
-		"pages:build": "npx @opennextjs/cloudflare build && cp .open-next/worker.js .open-next/_worker.js && echo '{\"version\":1,\"include\":[\"/*\"],\"exclude\":[\"/_next/static/**\",\"/images/**\",\"/*.svg\",\"/*.png\",\"/*.jpg\",\"/*.gif\",\"/*.ico\",\"/*.css\"]}' > .open-next/_routes.json"
+		"pages:build": "npx @opennextjs/cloudflare build && node build-pages.mjs"
 	},
 	"dependencies": {
 		"@anthropic-ai/sdk": "^0.80.0",
