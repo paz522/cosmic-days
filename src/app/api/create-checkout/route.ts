@@ -1,7 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import Stripe from "stripe";
 
-export const runtime = "edge";
 
 function getStripeClient(): Stripe {
 	const secretKey = process.env.STRIPE_SECRET_KEY;

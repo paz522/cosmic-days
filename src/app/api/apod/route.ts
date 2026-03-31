@@ -1,6 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
 
-export const runtime = "edge";
 
 // NASA API キーキャッシュ用（メモリ内キャッシュ）
 const apodCache = new Map<string, unknown>();

@@ -1,7 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import Stripe from "stripe";
 
-export const runtime = "edge";
 export const bodyParser = false;
 
 function getStripeClient(): Stripe {

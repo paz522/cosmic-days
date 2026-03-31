@@ -2,7 +2,6 @@ import { NextRequest, NextResponse } from "next/server";
 import { getSolarSpiritualMessage } from "../../../lib/cosmic";
 import { generateAISpiritualMessage } from "../../../lib/ai";
 
-export const runtime = "edge";
 
 // キャッシュ用（メモリ内キャッシュ）
 const spaceWeatherCache = new Map<string, unknown>();
