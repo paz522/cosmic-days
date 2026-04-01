@@ -463,17 +463,24 @@ export async function GET(request: NextRequest) {
 	try {
 		const isLocalDev = process.env.NODE_ENV === "development";
 
+		const withTimeout = <T>(promise: Promise<T>, ms: number, msg: string): Promise<T> => {
+			return Promise.race([
+				promise,
+				new Promise<T>((_, reject) => setTimeout(() => reject(new Error(msg)), ms))
+			]);
+		};
+
 		// 全データを並列で取得
 		const headers = request.headers;
 		const host = headers.get("host") || "localhost:3000";
 		const protocol = headers.get("x-forwarded-proto") || "http";
 		const origin = `${protocol}://${host}`;
 
-		const [apodRes, spaceWeatherRes, asteroidsRes] = await Promise.all([
+		const [apodRes, spaceWeatherRes, asteroidsRes] = await withTimeout(Promise.all([
 			fetch(`${origin}/api/apod?date=${date}`),
 			fetch(`${origin}/api/space-weather?date=${date}`),
 			fetch(`${origin}/api/asteroids?date=${date}`),
-		]);
+		]), 15000, "Internal API fetch timed out");
 
 		const apod = await apodRes.json() as ApodData;
 		
@@ -566,18 +573,18 @@ export async function GET(request: NextRequest) {
 			if (!MYBROWSER) {
 				throw new Error("MYBROWSER binding not found. Please check your Cloudflare configuration.");
 			}
-			browser = await puppeteer.launch(MYBROWSER);
+			browser = await withTimeout(puppeteer.launch(MYBROWSER), 15000, "Puppeteer launch timed out. Please check Cloudflare limits.");
 		}
 
 		try {
-			const page = await browser.newPage();
+			const page = await withTimeout(browser.newPage(), 10000, "Browser.newPage timed out");
 			await page.setContent(html, { 
 				waitUntil: "load",
-				timeout: 30000 
+				timeout: 20000 
 			});
 			
 			// 画像がすべて読み込まれるのを明示的に待つ
-			await (page as any).evaluate(async () => {
+			await withTimeout((page as any).evaluate(async () => {
 				const images = Array.from(document.querySelectorAll("img"));
 				await Promise.all(images.map(img => {
 					if (img.complete) return Promise.resolve();
@@ -586,7 +593,7 @@ export async function GET(request: NextRequest) {
 						img.addEventListener('error', resolve); // エラーでも次へ進む
 					});
 				}));
-			});
+			}), 10000, "Image loading evaluation timed out");
 
 			// レンダリングの安定化のための短い待機
 			await new Promise(resolve => setTimeout(resolve, 500));
