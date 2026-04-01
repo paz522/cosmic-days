@@ -3,7 +3,7 @@ import Stripe from "stripe";
 
 
 function getStripeClient(): Stripe {
-	const secretKey = process.env.STRIPE_SECRET_KEY;
+	const secretKey = process.env.STRIPE_SECRET_KEY?.trim();
 	if (!secretKey) {
 		throw new Error("STRIPE_SECRET_KEY is not configured");
 	}
@@ -26,7 +26,7 @@ export async function POST(request: NextRequest) {
 			);
 		}
 
-		const priceId = process.env.STRIPE_PRICE_ID;
+		const priceId = process.env.STRIPE_PRICE_ID?.trim();
 
 		if (!priceId) {
 			return NextResponse.json(

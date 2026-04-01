@@ -4,7 +4,7 @@ import Stripe from "stripe";
 export const bodyParser = false;
 
 function getStripeClient(): Stripe {
-	const secretKey = process.env.STRIPE_SECRET_KEY;
+	const secretKey = process.env.STRIPE_SECRET_KEY?.trim();
 	if (!secretKey) {
 		throw new Error("STRIPE_SECRET_KEY is not configured");
 	}
@@ -36,7 +36,7 @@ export async function POST(request: NextRequest) {
 		);
 	}
 
-	const webhookSecret = process.env.STRIPE_WEBHOOK_SECRET;
+	const webhookSecret = process.env.STRIPE_WEBHOOK_SECRET?.trim();
 
 	if (!webhookSecret) {
 		return NextResponse.json(
