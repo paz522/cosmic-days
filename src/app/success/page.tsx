@@ -4,6 +4,8 @@ import { useSearchParams } from "next/navigation";
 import { Suspense, useEffect, useState } from "react";
 
 import { getZodiacSign, generateSpiritualMessage, generateDeepMessage, type ApodData } from "../../lib/cosmic";
+import { generateClientPdf } from "../../lib/pdfGenerator";
+import type { ReportData } from "../../components/PdfTemplate";
 
 function SuccessContent() {
 	const searchParams = useSearchParams();
@@ -16,22 +18,6 @@ function SuccessContent() {
 	const [downloadProgress, setDownloadProgress] = useState(0);
 
 	useEffect(() => {
-		let interval: NodeJS.Timeout;
-		if (loading) {
-			interval = setInterval(() => {
-				setDownloadProgress((prev) => {
-					if (prev >= 95) return prev;
-					const increment = Math.random() * 5;
-					return Math.min(prev + increment, 95);
-				});
-			}, 400);
-		} else {
-			setDownloadProgress(100);
-		}
-		return () => clearInterval(interval);
-	}, [loading]);
-
-	useEffect(() => {
 		if (!sessionId && !date) {
 			setError("Session ID or date missing");
 			setLoading(false);
@@ -40,17 +26,22 @@ function SuccessContent() {
 
 		const generatePdf = async () => {
 			try {
-				// PDF 生成のみを行う
-				const url = `/api/generate-pdf?session_id=${sessionId}${date ? `&date=${date}` : ""}`;
+				// JSONデータを取得
+				const url = `/api/report-data?session_id=${sessionId}${date ? `&date=${date}` : ""}`;
 				const response = await fetch(url);
 
 				if (!response.ok) {
 					const errorData = await response.json() as { error?: string };
-					throw new Error(errorData.error || "Failed to generate PDF");
+					throw new Error(errorData.error || "Failed to gather cosmic data");
 				}
 
-				const blob = await response.blob();
-				const pdfUrl = window.URL.createObjectURL(blob);
+				const reportData = await response.json() as ReportData;
+				
+				// クライアントサイドでPDFを生成し、進捗をプログレスバーに反映
+				const pdfUrl = await generateClientPdf(reportData, (progress) => {
+					setDownloadProgress(Math.floor(progress));
+				});
+
 				setPdfUrl(pdfUrl);
 			} catch (err) {
 				setError(err instanceof Error ? err.message : "Unknown error");

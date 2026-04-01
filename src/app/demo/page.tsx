@@ -2,6 +2,8 @@
 
 import { Suspense, useState } from "react";
 import { useSearchParams } from "next/navigation";
+import { generateClientPdf } from "../../lib/pdfGenerator";
+import type { ReportData } from "../../components/PdfTemplate";
 
 interface FortuneData {
 	luckyColor: string;
@@ -135,16 +137,16 @@ function DemoContent() {
 			};
 			setFortune(fortuneData);
 
-			// PDF 生成
-			const pdfRes = await fetch(`/api/generate-pdf?session_id=demo&date=${date}`);
+			// PDF データ取得と生成
+			const pdfRes = await fetch(`/api/report-data?session_id=demo&date=${date}`);
 
 			if (!pdfRes.ok) {
 				const errData = (await pdfRes.json()) as { error?: string };
-				throw new Error(errData.error || "Failed to generate PDF");
+				throw new Error(errData.error || "Failed to gather cosmic data for PDF");
 			}
 
-			const blob = await pdfRes.blob();
-			const url = window.URL.createObjectURL(blob);
+			const reportData = await pdfRes.json() as ReportData;
+			const url = await generateClientPdf(reportData);
 			setPdfUrl(url);
 		} catch (err) {
 			setError(err instanceof Error ? err.message : "Unknown error");
