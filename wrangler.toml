@@ -5,3 +5,6 @@ pages_build_output_dir = ".open-next"
 
 [observability]
 enabled = true
+
+[browser]
+binding = "MYBROWSER"
