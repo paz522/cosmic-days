@@ -105,10 +105,7 @@ const PdfTemplate = forwardRef<HTMLDivElement, { data: ReportData }>(({ data }, 
 			fontWeight: 700,
 			textAlign: 'center' as const,
 			marginBottom: '20px',
-			color: '#fbbf24', // fallback
-			background: 'linear-gradient(to right, #fbbf24, #fef3c7, #d97706)',
-			WebkitBackgroundClip: 'text',
-			WebkitTextFillColor: 'transparent',
+			color: '#fbbf24',
 		},
 		h2: {
 			fontFamily: '"Noto Serif JP", serif',
