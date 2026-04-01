@@ -572,8 +572,8 @@ export async function GET(request: NextRequest) {
 		try {
 			const page = await browser.newPage();
 			await page.setContent(html, { 
-				waitUntil: "networkidle0",
-				timeout: 90000 
+				waitUntil: "load",
+				timeout: 30000 
 			});
 			
 			// 画像がすべて読み込まれるのを明示的に待つ
@@ -591,14 +591,17 @@ export async function GET(request: NextRequest) {
 			// レンダリングの安定化のための短い待機
 			await new Promise(resolve => setTimeout(resolve, 500));
 			
-			// フォントが完全にロードされるのを待つ
-			// @ts-ignore
-			await page.evaluateHandle('document.fonts.ready');
+			// フォントロードを最大5秒待機する（タイムアウト回避のため）
+			await Promise.race([
+				// @ts-ignore
+				page.evaluateHandle('document.fonts.ready'),
+				new Promise(resolve => setTimeout(resolve, 5000))
+			]);
 
 			const pdfBuffer = await page.pdf({
 				format: "A4",
 				printBackground: true,
-				timeout: 60000,
+				timeout: 10000,
 				margin: {
 					top: "20mm",
 					bottom: "20mm",
