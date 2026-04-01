@@ -5,7 +5,7 @@ import { NextRequest, NextResponse } from "next/server";
 const apodCache = new Map<string, unknown>();
 
 const FALLBACK_TITLE = "Cosmic Nebula";
-const FALLBACK_EXPLANATION = "広大な宇宙の美しさと共に、あなたの人生には無限の可能性と驚きが広がっています。この星雲のように、あなたが生まれた瞬間の宇宙は永遠に輝いています。";
+const FALLBACK_EXPLANATION = "Along with the beauty of the vast universe, infinite possibilities and wonders spread throughout your life. Like this nebula, the cosmos at the moment you were born shines eternally.";
 
 // ローカルのプレミアムフォールバック画像
 const FALLBACK_IMAGE_PATH = "/images/cosmic-fallback.png";
