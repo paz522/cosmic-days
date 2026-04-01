@@ -10,6 +10,7 @@ function getStripeClient(): Stripe {
 	}
 	return new Stripe(secretKey, {
 		apiVersion: "2026-02-25.clover",
+		httpClient: Stripe.createFetchHttpClient(),
 	});
 }
 
